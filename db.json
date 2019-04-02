@@ -1,0 +1,555 @@
+{
+  "grants": [
+    {
+      "id": 1,
+      "name": "Стипендиальная программа Estophilus scholarship в Эстонии!",
+      "organizationId": 4,
+      "grantAssignment": 1,
+      "grantGiverId": 1,
+      "shortDescription": "Стипендиальная программа Estophilus scholarship предназначена иностранным студентам, обучающимся в магистратуре, аспирантуре и постдокам из зарубежных университетов, которые пребывают в Эстонии с целью проведения исследований и/или сборов материалов об Эстонии.",
+      "description": "Требования: Получить стипендию могут студенты магистратуры, аспирантуры или кандидаты, занимающиеся постдоктоскими исследованиями. Кандидаты должны представлять иностранный вуз, но прибыть в Эстонию с целью проведения исследований и/или сборов материалов об Эстонии, эстонском языке и/или эстонской культуре. Заявка на стипендию и другие документы принимаются онлайн на эстонском или английском языке. Документы: заявка, план исследования, CV, подтверждение, что кандидат обучается в магистратуре или аспирантуре или занимается постдокторскими исследованиями; рекомендация от научного руководителя;",
+      "startDate": "2019-03-01T16:54:01.630Z",
+      "endDate": "2019-10-01T16:54:01.630Z",
+      "locations": [
+        {
+          "locationId": 97
+        }
+      ],
+      "subjects": [
+        {
+          "subjectId": 1
+        },
+        {
+          "subjectId": 3
+        },
+        {
+          "subjectId": 6
+        }
+      ],
+      "grantDetails": [
+        {
+          "id": 1,
+          "programCategoryId": 4,
+          "totalCost": 10000,
+          "grantSum": 15000,
+          "grantPercent": 75,
+          "flights": 1000,
+          "scholarship": 500,
+          "amount": 55,
+          "duration": 2,
+          "totalFund": 500000,
+          "grantDeatails": "Размер стипендии – 500€ в месяц. Дополнительно студенты получат грант на оплату транспортных расходов (размер гранта зависит от места проживания кандидата). Стипендия выплачивается до 10 месяцев.",
+          "grantType": 2,
+          "isDeadline": false,
+          "deadlineStarts": "2019-03-01T16:54:01.630Z",
+          "deadlineEnds": "2019-03-30T16:54:01.630Z"
+        },
+        {
+          "id": 2,
+          "programCategoryId": 5,
+          "totalCost": 20000,
+          "grantSum": 25000,
+          "grantPercent": 90,
+          "flights": 1000,
+          "scholarship": 1500,
+          "amount": 24,
+          "duration": 3,
+          "totalFund": 1500000,
+          "grantDeatails": "Размер стипендии – 500€ в месяц. Дополнительно студенты получат грант на оплату транспортных расходов (размер гранта зависит от места проживания кандидата). Стипендия выплачивается до 10 месяцев.",
+          "grantType": 1,
+          "isDeadline": false,
+          "deadlineStarts": "2019-03-11T16:54:01.630Z",
+          "deadlineEnds": "2019-04-30T16:54:01.630Z"
+        }
+      ],
+      "requiredCountries": [
+        {
+          "locationId": 11
+        },
+        {
+          "locationId": 97
+        },
+        {
+          "locationId": 17
+        }
+      ],
+      "isAgeRequired": true,
+      "requiredAgeFrom": 25,
+      "requiredAgeTo": 45,
+      "requirementsDetails": "подтверждение от эстонского научного руководителя о том, что он/она согласны быть научным руководителям данного кандидата и краткое описание темы исследования и что исследование должно проводиться именно в Эстонии."
+    },
+    {
+      "id": 2,
+      "name": "Стипендиальная программа Erasmus Mundus!",
+      "organizationId": 5,
+      "grantAssignment": 2,
+      "grantGiverId": 2,
+      "shortDescription": "Студенты, желающие получить степень магистра в области журналистики, могут подать заявку на эту стипендию",
+      "description": "Магистратура в области журналистики, медиа и глобализации Erasmus Mundus принимает заявления от имеющих степень бакалавра студентов со всего мира. Участники проведут первый год, обучаясь в Университете Орхуса в Дании, а второй год – в одном из европейских университетов-партнеров: Амстердамском университете, Лондонском городском университете, Гамбургском университете или Университете Суонси.",
+      "startDate": "2019-03-11T16:54:01.630Z",
+      "endDate": "2019-11-11T16:54:01.630Z",
+      "locations": [
+        {
+          "locationId": 54
+        }
+      ],
+      "subjects": [
+        {
+          "subjectId": 2
+        },
+        {
+          "subjectId": 4
+        },
+        {
+          "subjectId": 5
+        }
+      ],
+      "grantDetails": [
+        {
+          "id": 3,
+          "programCategoryId": 2,
+          "totalCost": 6000,
+          "grantSum": 14000,
+          "grantPercent": 87,
+          "flights": 900,
+          "scholarship": 650,
+          "amount": 62,
+          "duration": 1,
+          "totalFund": 425000,
+          "grantDeatails": "Стипендии категории А размером в 47 000 евро доступны для студентов из стран, не входящих в Европейский союз.",
+          "grantType": 2,
+          "isDeadline": false,
+          "deadlineStarts": "2019-03-01T16:54:01.630Z",
+          "deadlineEnds": "2019-04-27T16:54:01.630Z"
+        },
+        {
+          "id": 4,
+          "programCategoryId": 3,
+          "totalCost": 23000,
+          "grantSum": 29000,
+          "grantPercent": 100,
+          "flights": 1200,
+          "scholarship": 1850,
+          "amount": 33,
+          "duration": 2,
+          "totalFund": 500000,
+          "grantDeatails": "Стипендии категории B размером в 34 000 евро доступны для остальных студентов.",
+          "grantType": 1,
+          "isDeadline": false,
+          "deadlineStarts": "2019-03-17T16:54:01.630Z",
+          "deadlineEnds": "2019-05-30T16:54:01.630Z"
+        }
+      ],
+      "requiredCountries": [
+        {
+          "locationId": 13
+        },
+        {
+          "locationId": 54
+        },
+        {
+          "locationId": 47
+        }
+      ],
+      "isAgeRequired": true,
+      "requiredAgeFrom": 21,
+      "requiredAgeTo": 35,
+      "requirementsDetails": "Для участия в программе необходимо хорошее знание английского языка."
+    },
+    {
+      "id": 3,
+      "name": "Стипендиальная программа Erasmus Mundus!",
+      "organizationId": 5,
+      "grantAssignment": 2,
+      "grantGiverId": 2,
+      "shortDescription": "Студенты, желающие получить степень магистра в области журналистики, могут подать заявку на эту стипендию",
+      "description": "Магистратура в области журналистики, медиа и глобализации Erasmus Mundus принимает заявления от имеющих степень бакалавра студентов со всего мира. Участники проведут первый год, обучаясь в Университете Орхуса в Дании, а второй год – в одном из европейских университетов-партнеров: Амстердамском университете, Лондонском городском университете, Гамбургском университете или Университете Суонси.",
+      "startDate": "2019-03-11T16:54:01.630Z",
+      "endDate": "2019-11-11T16:54:01.630Z",
+      "locations": [
+        {
+          "locationId": 54
+        }
+      ],
+      "subjects": [
+        {
+          "subjectId": 2
+        },
+        {
+          "subjectId": 4
+        },
+        {
+          "subjectId": 5
+        }
+      ],
+      "grantDetails": [
+        {
+          "id": 5,
+          "programCategoryId": 2,
+          "totalCost": 6000,
+          "grantSum": 14000,
+          "grantPercent": 87,
+          "flights": 900,
+          "scholarship": 650,
+          "amount": 62,
+          "duration": 1,
+          "totalFund": 425000,
+          "grantDeatails": "Стипендии категории А размером в 47 000 евро доступны для студентов из стран, не входящих в Европейский союз.",
+          "grantType": 2,
+          "isDeadline": false,
+          "deadlineStarts": "2019-03-01T16:54:01.630Z",
+          "deadlineEnds": "2019-04-27T16:54:01.630Z"
+        },
+        {
+          "id": 6,
+          "programCategoryId": 3,
+          "totalCost": 23000,
+          "grantSum": 29000,
+          "grantPercent": 100,
+          "flights": 1200,
+          "scholarship": 1850,
+          "amount": 33,
+          "duration": 2,
+          "totalFund": 500000,
+          "grantDeatails": "Стипендии категории B размером в 34 000 евро доступны для остальных студентов.",
+          "grantType": 1,
+          "isDeadline": false,
+          "deadlineStarts": "2019-03-17T16:54:01.630Z",
+          "deadlineEnds": "2019-05-30T16:54:01.630Z"
+        }
+      ],
+      "requiredCountries": [
+        {
+          "locationId": 13
+        },
+        {
+          "locationId": 54
+        },
+        {
+          "locationId": 47
+        }
+      ],
+      "isAgeRequired": true,
+      "requiredAgeFrom": 21,
+      "requiredAgeTo": 35,
+      "requirementsDetails": "Для участия в программе необходимо хорошее знание английского языка."
+    },
+    {
+      "id": 5,
+      "name": "Стипендиальная программа Erasmus Mundus!",
+      "organizationId": 5,
+      "grantAssignment": 2,
+      "grantGiverId": 2,
+      "shortDescription": "Студенты, желающие получить степень магистра в области журналистики, могут подать заявку на эту стипендию",
+      "description": "Магистратура в области журналистики, медиа и глобализации Erasmus Mundus принимает заявления от имеющих степень бакалавра студентов со всего мира. Участники проведут первый год, обучаясь в Университете Орхуса в Дании, а второй год – в одном из европейских университетов-партнеров: Амстердамском университете, Лондонском городском университете, Гамбургском университете или Университете Суонси.",
+      "startDate": "2019-03-11T16:54:01.630Z",
+      "endDate": "2019-11-11T16:54:01.630Z",
+      "locations": [
+        {
+          "locationId": 54
+        }
+      ],
+      "subjects": [
+        {
+          "subjectId": 2
+        },
+        {
+          "subjectId": 4
+        },
+        {
+          "subjectId": 5
+        }
+      ],
+      "grantDetails": [
+        {
+          "id": 7,
+          "programCategoryId": 2,
+          "totalCost": 6000,
+          "grantSum": 14000,
+          "grantPercent": 87,
+          "flights": 900,
+          "scholarship": 650,
+          "amount": 62,
+          "duration": 1,
+          "totalFund": 425000,
+          "grantDeatails": "Стипендии категории А размером в 47 000 евро доступны для студентов из стран, не входящих в Европейский союз.",
+          "grantType": 2,
+          "isDeadline": false,
+          "deadlineStarts": "2019-03-01T16:54:01.630Z",
+          "deadlineEnds": "2019-04-27T16:54:01.630Z"
+        },
+        {
+          "id": 8,
+          "programCategoryId": 3,
+          "totalCost": 23000,
+          "grantSum": 29000,
+          "grantPercent": 100,
+          "flights": 1200,
+          "scholarship": 1850,
+          "amount": 33,
+          "duration": 2,
+          "totalFund": 500000,
+          "grantDeatails": "Стипендии категории B размером в 34 000 евро доступны для остальных студентов.",
+          "grantType": 1,
+          "isDeadline": false,
+          "deadlineStarts": "2019-03-17T16:54:01.630Z",
+          "deadlineEnds": "2019-05-30T16:54:01.630Z"
+        }
+      ],
+      "requiredCountries": [
+        {
+          "locationId": 13
+        },
+        {
+          "locationId": 54
+        },
+        {
+          "locationId": 47
+        }
+      ],
+      "isAgeRequired": true,
+      "requiredAgeFrom": 21,
+      "requiredAgeTo": 35,
+      "requirementsDetails": "Для участия в программе необходимо хорошее знание английского языка."
+    },
+    {
+      "organizationId": 4,
+      "logo": "C:\\fakepath\\kazakhstan.jpg",
+      "name": "123",
+      "link": "https://www.npmjs.com/package/json-server",
+      "request": "https://www.npmjs.com/package/json-server",
+      "grantAssignment": "0",
+      "grantGiverId": "1",
+      "subjects": [
+        {
+          "subjectId": "1"
+        },
+        {
+          "subjectId": "6"
+        },
+        {
+          "subjectId": "7"
+        }
+      ],
+      "requiredAgeFrom": "123",
+      "requiredAgeTo": "132",
+      "shortDescription": "123",
+      "description": "123",
+      "requirementsDetails": "132",
+      "requiredCountries": [
+        {
+          "locationId": "1"
+        },
+        {
+          "locationId": "2"
+        },
+        {
+          "locationId": "3"
+        }
+      ],
+      "locations": [
+        {
+          "locationId": "1"
+        },
+        {
+          "locationId": "2"
+        },
+        {
+          "locationId": "4"
+        }
+      ],
+      "totalCost": "132",
+      "startDate": "2019-03-01",
+      "endDate": "2019-03-30",
+      "grantDetails": [
+        {
+          "programCategoryId": 1,
+          "grantType": "1",
+          "totalCost": "123",
+          "grantPercent": "123",
+          "grantSum": "123",
+          "flights": "132",
+          "scholarship": "123",
+          "amount": "123",
+          "duration": "132",
+          "totalFund": "123",
+          "grantDeatails": "123",
+          "isDeadline": "false"
+        }
+      ],
+      "id": 6
+    }
+  ],
+  "programCategories": [
+    {
+      "id": 1,
+      "name": "Бакалавриат"
+    },
+    {
+      "id": 2,
+      "name": "Магистратура"
+    },
+    {
+      "id": 3,
+      "name": "Докторантура"
+    },
+    {
+      "id": 4,
+      "name": "Постдокторантура "
+    }
+  ],
+  "organizations": [
+    {
+      "id": 1,
+      "name": "Министерство Образования Республики Корея"
+    },
+    {
+      "id": 2,
+      "name": "Министерство Образования Республики Япония"
+    },
+    {
+      "id": 3,
+      "name": "Министерство Образования Республики Китай"
+    },
+    {
+      "id": 4,
+      "name": "Правительство какой-то страны"
+    },
+    {
+      "id": 5,
+      "name": "Erasmus Mundus"
+    },
+    {
+      "name": "Министерство образования РКК",
+      "id": 6
+    }
+  ],
+  "subjects": [
+    {
+      "id": 1,
+      "name": "Бизнес "
+    },
+    {
+      "id": 2,
+      "name": "Гуманитарные науки "
+    },
+    {
+      "id": 3,
+      "name": "Естественные науки "
+    },
+    {
+      "id": 4,
+      "name": "Компьютерные науки (ИТ)"
+    },
+    {
+      "id": 5,
+      "name": "Инженерная технология "
+    },
+    {
+      "id": 6,
+      "name": "Искусство "
+    },
+    {
+      "id": 7,
+      "name": "Менеджмент "
+    },
+    {
+      "id": 8,
+      "name": "Медицина и здоровье "
+    },
+    {
+      "id": 9,
+      "name": "Право "
+    },
+    {
+      "id": 10,
+      "name": "Социальные науки "
+    },
+    {
+      "id": 11,
+      "name": "Экология"
+    },
+    {
+      "id": 12,
+      "name": "Экономика "
+    },
+    {
+      "id": 13,
+      "name": "Прочие "
+    },
+    {
+      "id": 14,
+      "name": "Продажи/обслуживание клиентов"
+    },
+    {
+      "id": 15,
+      "name": "Консалтинг"
+    },
+    {
+      "id": 16,
+      "name": "Производство, инженерия"
+    },
+    {
+      "id": 17,
+      "name": "Закупки"
+    },
+    {
+      "id": 18,
+      "name": "Аналитика"
+    },
+    {
+      "id": 19,
+      "name": "Международный культурный обмен"
+    },
+    {
+      "id": 20,
+      "name": "Лидерство"
+    },
+    {
+      "id": 21,
+      "name": "Молодежное"
+    },
+    {
+      "id": 22,
+      "name": "На мероприятиях"
+    },
+    {
+      "id": 23,
+      "name": "Блогерство"
+    },
+    {
+      "id": 24,
+      "name": "Преподавание"
+    },
+    {
+      "id": 25,
+      "name": "В международных организациях"
+    },
+    {
+      "id": 26,
+      "name": "На природе"
+    },
+    {
+      "id": 27,
+      "name": "Административная работа"
+    },
+    {
+      "id": 29,
+      "name": "Другое"
+    }
+  ],
+  "grantGivers": [
+    {
+      "id": 1,
+      "name": "Внутривузовская"
+    },
+    {
+      "id": 2,
+      "name": "Правительственная"
+    },
+    {
+      "name": "Международная",
+      "id": 3
+    }
+  ]
+}
