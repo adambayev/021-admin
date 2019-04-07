@@ -30,17 +30,18 @@ const EditGrant = props => {
   const checkboxHandler = (event, dataId) => {
     let newState = props.data;
     newState.grantDetails.options.map((item, i) => {
-      return item.id == dataId
+      return item.id === dataId
         ? (newState.grantDetails.options[i].checked = event.target.checked)
         : null;
     });
 
     props.data.grantDetails.options.map(item => {
-      if (item.checked && item.id == dataId) {
-        newState.grantDetails.value.push(
+      if (item.checked && item.id === dataId) {
+        return newState.grantDetails.value.push(
           _.cloneDeep(props.data.grantFormData[0]),
         );
       }
+      return null;
     });
 
     props.updateDetails(newState);
@@ -190,6 +191,7 @@ const EditGrant = props => {
                       </Row>
                     );
                   }
+                  return null;
                 })}
               </Card>
             </Col>

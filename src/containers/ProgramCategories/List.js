@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
-
 import ProgramCategoriesList from '../../components/ProgramCategories/List';
-
-import { Col, Row } from 'reactstrap';
 
 class ProgramCategoriesListContainer extends Component {
   constructor() {

@@ -1,9 +1,6 @@
 import React from 'react';
-
-import { Col, FormGroup, Input, Label, FormText, Row } from 'reactstrap';
-import MultiSelect from './MultiSelect';
+import { Col, FormGroup, Input, Label } from 'reactstrap';
 import { TextField } from 'components';
-import * as _ from 'lodash';
 
 const FormFields = props => {
   const renderFields = () => {

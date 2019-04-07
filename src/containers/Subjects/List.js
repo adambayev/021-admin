@@ -4,8 +4,6 @@ import axios from 'axios';
 
 import SubjectsList from '../../components/Subjects/List';
 
-import { Col, Row } from 'reactstrap';
-
 class SubjectsListContainer extends Component {
   constructor() {
     super();

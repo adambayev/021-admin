@@ -27,8 +27,9 @@ class ReactMultiSelect extends React.Component {
     let selected = [];
     this.props.options.map(day => {
       if (day.value) {
-        selected.push({ name: day.name, id: day.id });
+        return selected.push({ name: day.name, id: day.id });
       }
+      return null;
     });
     let selectedList = (
       <label
@@ -97,8 +98,9 @@ class ReactMultiSelect extends React.Component {
 
     filteredToasts.map(obj => {
       if (obj.id === id) {
-        obj.value = false;
+        return (obj.value = false);
       }
+      return null;
     });
     this.setState({ dropDownClicked: false });
     this.props.optionClicked(filteredToasts);

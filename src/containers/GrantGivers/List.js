@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
-
 import GrantGiversList from '../../components/GrantGivers/List';
-
-import { Col, Row } from 'reactstrap';
 
 class GrantGiversListContainer extends Component {
   constructor() {

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-
 import AddProgramCategory from '../../components/ProgramCategories/Add';
 import axios from 'axios';
-
-import * as _ from 'lodash';
 
 class AddProgramCategoryContainer extends Component {
   constructor() {

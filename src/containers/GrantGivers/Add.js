@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-
 import AddGrantGiver from '../../components/GrantGivers/Add';
 import axios from 'axios';
-
-import * as _ from 'lodash';
 
 class AddGrantGiverContainer extends Component {
   constructor() {

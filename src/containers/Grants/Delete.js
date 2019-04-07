@@ -397,7 +397,7 @@ class DeleteGrantContainer extends Component {
   async fetchData() {
     console.log('this.state.formData.programCategories');
     console.log(this.state.formData.programCategories);
-    const response = await axios
+    await axios
       .get(`${process.env.REACT_APP_URL}/ProgramCategories`)
       .then(response => {
         let newState = Object.assign({}, this.state);
@@ -413,7 +413,7 @@ class DeleteGrantContainer extends Component {
           });
           let temp = _.cloneDeep(this.state.grantFormData[0]);
           temp.id = item.id;
-          newState.grantFormData.push(temp);
+          return newState.grantFormData.push(temp);
         });
 
         newState.isLoading = false;
@@ -456,7 +456,7 @@ class DeleteGrantContainer extends Component {
     axios.get(`${process.env.REACT_APP_URL}/Grants`).then(response => {
       let newState = Object.assign({}, this.state);
 
-      let res = response.data.filter(a => a.id == this.props.params.id);
+      let res = response.data.filter(a => a.id === this.props.params.id);
 
       for (let key in this.state.formData) {
         newState.formData[key].value = res[0][key];

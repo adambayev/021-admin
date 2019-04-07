@@ -113,16 +113,17 @@ class AddGrantContainer extends Component {
             placeholder: 'Выберит дату',
           },
         },
-        totalCost: {
+        isDeadline: {
           position: 'right',
-          element: 'input',
-          value: '',
+          element: 'switch',
+          value: true,
           label: true,
-          labelText: 'Размер стипендии',
+          labelText: 'Бессрочный',
           config: {
-            name: 'totalCost_input',
+            label: 'Бессрочный',
+            name: 'deadline_input',
             type: 'number',
-            placeholder: 'Enter',
+            placeholder: '',
           },
         },
         endDate: {
@@ -132,6 +133,35 @@ class AddGrantContainer extends Component {
           label: true,
           labelText: 'Конец программы',
           config: {
+            name: 'endDate_input',
+            type: 'date',
+            placeholder: 'Выберит дату',
+          },
+        },
+        deadlineStarts: {
+          position: 'right',
+          element: 'input',
+          value: '',
+          label: true,
+          labelText: 'Начало приема заявок',
+          config: {
+            disabled: true,
+            name: 'startDate_input',
+            type: 'date',
+            placeholder: 'Выберит дату',
+          },
+        },
+        empty: {
+          position: 'left',
+        },
+        deadlineEnds: {
+          position: 'right',
+          element: 'input',
+          value: '',
+          label: true,
+          labelText: 'Конец приема заявок',
+          config: {
+            disabled: true,
             name: 'endDate_input',
             type: 'date',
             placeholder: 'Выберит дату',
@@ -188,45 +218,62 @@ class AddGrantContainer extends Component {
             options: [],
           },
         },
-        requiredAgeFrom: {
+        requiredAge: {
           position: 'left',
           element: 'inputrange',
-          value: '',
+          value: { min: 18, max: 99 },
           label: true,
           labelText: 'Требования по возрасту',
           config: {
             name: 'requiredAgeFrom_input',
             type: 'number',
             placeholder: 'Enter',
+            minValue: 1,
+            maxValue: 99,
           },
         },
       },
       processData: {
+        applicationProcess: {
+          position: 'right',
+          element: 'textareaWithEditor',
+          value: '',
+          label: true,
+          labelText: 'Процесс подачи стипендии',
+          config: {
+            name: 'applicationProcess_input',
+            rows: 8,
+            cols: 36,
+          },
+        },
         file: {
           position: 'right',
           element: 'file',
-          value: '',
+          value: ['file'],
           label: true,
-          labelText: 'Процесс подачи',
+          labelText: 'Приложение',
           text: 'Процесс подачи стипендии',
           config: {
             name: 'file_input',
             type: 'file',
+            options: [],
           },
         },
       },
       grantFormData: [
         {
-          programCategoryId: {
+          totalCost: {
             position: 'left',
-            element: 'input',
-            value: 0,
+            element: 'dropdowninput',
+            value: { currency: 'KZT' },
             label: true,
-            labelText: 'Программа',
+            labelText: 'Стоимость обучения в год',
             config: {
-              name: 'programCategoryId_input',
-              type: 'text',
+              name: 'totalCost_input',
+              type: 'number',
               placeholder: '',
+              header: 'Валюта',
+              options: ['KZT', 'USD', 'EUR'],
             },
           },
           grantType: {
@@ -244,47 +291,42 @@ class AddGrantContainer extends Component {
               ],
             },
           },
-          totalCost: {
-            position: 'left',
-            element: 'input',
-            value: '',
-            label: true,
-            labelText: 'Стоимость обучения',
-            config: {
-              name: 'totalCost_input',
-              type: 'number',
-              placeholder: '',
-            },
-          },
           grantPercent: {
-            position: 'right',
-            element: 'input',
-            value: '',
+            position: 'left',
+            element: 'inputwithradio',
+            value: {
+              isPercentage: true,
+              currency: '%',
+              amount: '',
+            },
             label: true,
-            labelText:
-              '% гранта покрывающий стоимость обучения на одного человека',
+            labelText: 'Покрытие стоимости обучения на одного человека',
             config: {
               name: 'grantPercent_input',
               type: 'number',
               placeholder: '',
+              header: '%',
             },
           },
-          grantSum: {
-            position: 'left',
-            element: 'input',
-            value: '',
+
+          scholarship: {
+            position: 'right',
+            element: 'dropdowninput',
+            value: { currency: 'KZT' },
             label: true,
-            labelText: 'Общая сумма гранта на человека',
+            labelText: 'Ежемесячная стипендия',
             config: {
-              name: 'grantSum_input',
+              name: 'scholarship_input',
               type: 'number',
               placeholder: '',
+              header: 'Валюта',
+              options: ['KZT', 'USD', 'EUR'],
             },
           },
           flights: {
-            position: 'right',
-            element: 'input',
-            value: '',
+            position: 'left',
+            element: 'switch',
+            value: false,
             label: true,
             labelText: 'Сумма на перелеты',
             config: {
@@ -293,20 +335,22 @@ class AddGrantContainer extends Component {
               placeholder: '',
             },
           },
-          scholarship: {
-            position: 'left',
-            element: 'input',
-            value: '',
+          duration: {
+            position: 'right',
+            element: 'dropdowninput',
+            value: { currency: 'месяцы', amount: '' },
             label: true,
-            labelText: 'Стипендия на руки',
+            labelText: 'Длительность программы',
             config: {
-              name: 'scholarship_input',
+              name: 'duration_input',
               type: 'number',
               placeholder: '',
+              header: 'Период',
+              options: ['месяцы', 'годы'],
             },
           },
           amount: {
-            position: 'right',
+            position: 'left',
             element: 'input',
             value: '',
             label: true,
@@ -317,17 +361,21 @@ class AddGrantContainer extends Component {
               placeholder: '',
             },
           },
-          duration: {
-            position: 'left',
+          grantSum: {
+            position: 'right',
             element: 'input',
             value: '',
             label: true,
-            labelText: 'Длительность программы',
+            labelText: 'Общая сумма гранта на человека',
             config: {
-              name: 'duration_input',
+              disabled: true,
+              name: 'grantSum_input',
               type: 'number',
               placeholder: '',
             },
+          },
+          empty: {
+            position: 'left',
           },
           totalFund: {
             position: 'right',
@@ -336,34 +384,14 @@ class AddGrantContainer extends Component {
             label: true,
             labelText: 'Общий стипендиальный фонд',
             config: {
+              disabled: true,
               name: 'totalFund_input',
               type: 'number',
               placeholder: '',
             },
           },
-          grantDeatails: {
-            position: 'left',
-            element: 'input',
-            value: '',
-            label: true,
-            labelText: 'Детали гранта и стоимости',
-            config: {
-              name: 'grantDeatails_input',
-              type: 'text',
-              placeholder: '',
-            },
-          },
-          isDeadline: {
-            position: 'right',
-            element: 'input',
-            value: false,
-            label: true,
-            labelText: 'Бессрочный',
-            config: {
-              name: 'grantType_input',
-              type: 'checkbox',
-              placeholder: '',
-            },
+          programCategoryId: {
+            value: 0,
           },
         },
       ],
@@ -376,7 +404,9 @@ class AddGrantContainer extends Component {
       isOpenRequirements: false,
       isOpenDetails: true,
       isOpenProcessOfFiling: false,
+      isOpenProgramCategories: false,
       file: '',
+      error: null,
     };
   }
 
@@ -396,32 +426,34 @@ class AddGrantContainer extends Component {
       .get(`${process.env.REACT_APP_URL}/ProgramCategories`)
       .then(response => {
         let newState = Object.assign({}, this.state);
-        newState['grantDetails'].options = response.data;
+        newState['grantDetails'].options = response.data.data;
         this.setState(newState);
       });
     axios.get(`${process.env.REACT_APP_URL}/Organizations`).then(response => {
       let newState = Object.assign({}, this.state);
-      newState.formData['organizationId'].config.options = response.data;
+      newState.formData['organizationId'].config.options = response.data.data;
       this.setState(newState);
     });
     axios.get(`${process.env.REACT_APP_URL}/GrantGivers`).then(response => {
       let newState = Object.assign({}, this.state);
-      newState.formData['grantGiverId'].config.options = response.data;
+      newState.formData['grantGiverId'].config.options = response.data.data;
       this.setState(newState);
     });
     axios
       .get(`${process.env.REACT_APP_URL}/Content/subjects`)
       .then(response => {
         let newState = Object.assign({}, this.state);
-        newState.formData['subjects'].value = response.data;
+        newState.formData['subjects'].config.options = response.data;
         this.setState(newState);
       });
-    axios.get(`${process.env.REACT_APP_URL}/Locations`).then(response => {
+    axios.get(`${process.env.REACT_APP_URL}/locations`).then(response => {
       let newState = Object.assign({}, this.state);
-      newState.formData['locations'].value = _.cloneDeep(response.data);
-      newState.requirementsData['requiredCountries'].value = _.cloneDeep(
-        response.data,
+      newState.formData['locations'].config.options = _.cloneDeep(
+        response.data.data,
       );
+      newState.requirementsData[
+        'requiredCountries'
+      ].config.options = _.cloneDeep(response.data.data);
       this.setState(newState);
     });
   }
@@ -483,16 +515,21 @@ class AddGrantContainer extends Component {
       dataToSubmit[key] = this.state.requirementsData[key].value;
     }
 
+    for (let key in this.state.processData) {
+      dataToSubmit[key] = this.state.processData[key].value;
+    }
+
     let details = {};
     let detailsArray = [];
     this.state.grantDetails.value.map(item => {
-      if (item.grantType.value != '') {
+      if (item.grantType.value !== '') {
         for (let key in item) {
           details[key] = item[key].value;
         }
         let det = _.cloneDeep(details);
-        detailsArray.push(det);
+        return detailsArray.push(det);
       }
+      return null;
     });
 
     let subject = {};
@@ -500,8 +537,9 @@ class AddGrantContainer extends Component {
     this.state.formData.subjects.value.map(item => {
       if (item.value) {
         subject = { subjectId: `${item.id}` };
-        subjectArray.push(subject);
+        return subjectArray.push(subject);
       }
+      return null;
     });
 
     let location = {};
@@ -509,8 +547,9 @@ class AddGrantContainer extends Component {
     this.state.formData.locations.value.map(item => {
       if (item.value) {
         location = { locationId: `${item.id}` };
-        locationArray.push(location);
+        return locationArray.push(location);
       }
+      return null;
     });
 
     let requiredCountry = {};
@@ -518,9 +557,13 @@ class AddGrantContainer extends Component {
     this.state.requirementsData.requiredCountries.value.map(item => {
       if (item.value) {
         requiredCountry = { locationId: `${item.id}` };
-        requiredCountryArray.push(requiredCountry);
+        return requiredCountryArray.push(requiredCountry);
       }
+      return null;
     });
+
+    dataToSubmit.requiredAgeFrom = this.state.requirementsData.requiredAge.value.min;
+    dataToSubmit.requiredAgeTo = this.state.requirementsData.requiredAge.value.max;
 
     dataToSubmit['grantDetails'] = detailsArray;
     dataToSubmit['subjects'] = subjectArray;
@@ -532,7 +575,9 @@ class AddGrantContainer extends Component {
 
     this.fileUpload(this.state.file, dataToSubmit).then(response => {
       console.log(response.data);
-      console.log(response.data);
+      response.data.ok
+        ? this.setState({ error: 'Данные успешно выгрузились' })
+        : this.setState({ error: 'Произошла ошибка при выгрузке данных' });
     });
 
     // axios
@@ -573,6 +618,7 @@ class AddGrantContainer extends Component {
           handleClick={name => this.handleClick(name)}
           submitForm={event => this.submitForm(event)}
           data={this.state}
+          error={this.state.error}
         />
       </React.Fragment>
     );

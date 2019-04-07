@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
-
-import * as _ from 'lodash';
 import EditOrganization from '../../components/Organizations/Edit';
 import Loader from '../../components/Widget/Loader';
 
@@ -31,7 +28,7 @@ class EditOrganizationContainer extends Component {
     axios.get(`${process.env.REACT_APP_URL}/Organizations`).then(response => {
       let newState = Object.assign({}, this.state);
 
-      let res = response.data.filter(a => a.id == this.props.params.id);
+      let res = response.data.filter(a => a.id === this.props.params.id);
 
       for (let key in this.state.formData) {
         newState.formData[key].value = res[0][key];

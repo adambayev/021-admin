@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-
 import AddOrganization from '../../components/Organizations/Add';
 import axios from 'axios';
-
-import * as _ from 'lodash';
 
 class AddOrganizationContainer extends Component {
   constructor() {

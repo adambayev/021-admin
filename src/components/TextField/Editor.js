@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import './style.css';
 
@@ -21,7 +21,7 @@ class TextAreaWithEditor extends Component {
   };
 
   render() {
-    const { editorState, text } = this.state;
+    const { editorState } = this.state;
 
     return (
       <Editor
@@ -29,10 +29,32 @@ class TextAreaWithEditor extends Component {
         editorClassName="editorClassName"
         onEditorStateChange={this.onEditorStateChange}
         toolbar={{
-          options: ['inline', 'fontSize'],
+          options: [
+            'inline',
+            'blockType',
+            'fontSize',
+            'fontFamily',
+            'list',
+            'textAlign',
+            'colorPicker',
+            'link',
+            'embedded',
+            'emoji',
+            'image',
+            'remove',
+            'history',
+          ],
           inline: {
             inDropdown: false,
-            options: ['bold', 'italic', 'underline'],
+            options: [
+              'bold',
+              'italic',
+              'underline',
+              'strikethrough',
+              'monospace',
+              'superscript',
+              'subscript',
+            ],
           },
         }}
       />

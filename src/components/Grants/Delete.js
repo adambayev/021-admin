@@ -1,7 +1,5 @@
 import React from 'react';
-
 import GrantFields from '../Widget/GrantFields';
-import AdditionalForm from '../Widget/AdditionalForm';
 
 import {
   Button,
@@ -12,8 +10,6 @@ import {
   Form,
   FormGroup,
   Row,
-  Label,
-  Input,
 } from 'reactstrap';
 
 const DeleteGrant = props => {

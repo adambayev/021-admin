@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
-
-import * as _ from 'lodash';
 import DeleteProgramCategory from '../../components/ProgramCategories/Delete';
-import Loader from '../../components/Widget/Loader';
-import { Router, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 class DeleteProgramCategoryContainer extends Component {
   constructor() {
@@ -35,7 +31,7 @@ class DeleteProgramCategoryContainer extends Component {
       .then(response => {
         let newState = Object.assign({}, this.state);
 
-        let res = response.data.filter(a => a.id == this.props.params.id);
+        let res = response.data.filter(a => a.id === this.props.params.id);
 
         for (let key in this.state.formData) {
           newState.formData[key].value = res[0][key];

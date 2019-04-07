@@ -426,21 +426,20 @@ class EditGrantContainer extends Component {
     axios.get(`${process.env.REACT_APP_URL}/Grants`).then(response => {
       let newState = Object.assign({}, this.state);
 
-      let res = response.data.filter(a => a.id == this.props.params.id);
+      let res = response.data.filter(a => a.id === this.props.params.id);
 
       for (let key in this.state.formData) {
         newState.formData[key].value = res[0][key];
       }
 
       newState.descriptionData.description.value = res[0].description;
-      debugger;
 
       newState.requirementsData.requirementsDetails.value =
         res[0].requirementsDetails;
 
-      newState.formData.subjects.value.map(item => {
-        console.log(item);
-      });
+      // newState.formData.subjects.value.map(item => {
+      //   console.log(item);
+      // });
 
       newState.isLoading = false;
       this.setState(newState);
@@ -500,13 +499,14 @@ class EditGrantContainer extends Component {
     let details = {};
     let detailsArray = [];
     this.state.grantDetails.value.map(item => {
-      if (item.grantType.value != '') {
+      if (item.grantType.value !== '') {
         for (let key in item) {
           details[key] = item[key].value;
         }
         let det = _.cloneDeep(details);
-        detailsArray.push(det);
+        return detailsArray.push(det);
       }
+      return null;
     });
 
     let subject = {};
@@ -514,8 +514,9 @@ class EditGrantContainer extends Component {
     this.state.formData.subjects.value.map(item => {
       if (item.value) {
         subject = { subjectId: `${item.id}` };
-        subjectArray.push(subject);
+        return subjectArray.push(subject);
       }
+      return null;
     });
 
     let location = {};
@@ -523,8 +524,9 @@ class EditGrantContainer extends Component {
     this.state.formData.locations.value.map(item => {
       if (item.value) {
         location = { locationId: `${item.id}` };
-        locationArray.push(location);
+        return locationArray.push(location);
       }
+      return null;
     });
 
     let requiredCountry = {};
@@ -532,8 +534,9 @@ class EditGrantContainer extends Component {
     this.state.requirementsData.requiredCountries.value.map(item => {
       if (item.value) {
         requiredCountry = { locationId: `${item.id}` };
-        requiredCountryArray.push(requiredCountry);
+        return requiredCountryArray.push(requiredCountry);
       }
+      return null;
     });
 
     dataToSubmit['grantDetails'] = detailsArray;

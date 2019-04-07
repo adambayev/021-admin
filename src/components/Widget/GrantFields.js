@@ -1,8 +1,16 @@
 import React from 'react';
 
-import { Col, FormGroup, Input, Label, FormText, Row } from 'reactstrap';
+import {
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  FormText,
+  Row,
+  CustomInput,
+} from 'reactstrap';
 import { TextField } from 'components';
-import MultiSelect from './MultiSelect';
+import Selector from './Selector';
 import { Link } from 'react-router-dom';
 import * as _ from 'lodash';
 
@@ -13,7 +21,7 @@ const FormFields = props => {
     const formArray = [];
 
     for (let elementName in props.data.formData) {
-      if (props.data.formData[elementName].position == 'left') {
+      if (props.data.formData[elementName].position === 'left') {
         leftFormArray.push({
           id: elementName,
           settings: props.data.formData[elementName],
@@ -62,6 +70,19 @@ const FormFields = props => {
     props.change(newState);
   };
 
+  const switchHandler = (event, id) => {
+    let newState = props.data;
+    newState.formData[id].value = event.target.checked;
+    if (event.target.checked) {
+      newState.formData.deadlineStarts.config.disabled = true;
+      newState.formData.deadlineEnds.config.disabled = true;
+    } else {
+      newState.formData.deadlineStarts.config.disabled = false;
+      newState.formData.deadlineEnds.config.disabled = false;
+    }
+    props.change(newState);
+  };
+
   const changeTextFieldHandler = (value, id) => {
     let newState = props.data;
     newState.formData[id].value = value;
@@ -72,12 +93,6 @@ const FormFields = props => {
     let newState = props.data;
     newState.file = event.target.files[0];
     newState.formData[id].value = event.target.value;
-    props.change(newState);
-  };
-
-  const multipleSelectChangeHandler = (event, id) => {
-    let newState = props.data;
-    newState.formData[id].value.push(event.target.value);
     props.change(newState);
   };
 
@@ -102,31 +117,35 @@ const FormFields = props => {
     let newState = props.data;
     let options = _.cloneDeep(optionsList);
     newState.formData[id].value = _.cloneDeep(options);
-    debugger;
-    if (id == 'grantDetails') {
+    if (id === 'grantDetails') {
       options.map(item => {
         if (item.value) {
-          newState.formData[id].value[item.id].data = _.cloneDeep(
+          return (newState.formData[id].value[item.id].data = _.cloneDeep(
             props.data.grantFormData[0],
-          );
+          ));
         }
+        return null;
       });
     }
-    props.change(newState);
+    return props.change(newState);
   };
-  const selectedBadgeClicked = (optionsList, id) => {
-    let newState = props.data;
-    let options = _.cloneDeep(optionsList);
-    newState.formData[id].value = _.cloneDeep(options);
-    if (id == 'grantDetails') {
-      options.map(item => {
-        if (item.value) {
-          newState.grantFormData.push(_.cloneDeep(props.data.grantFormData[0]));
-        }
-      });
-    }
-    props.change(newState);
-  };
+
+  // const selectedBadgeClicked = (optionsList, id) => {
+  //   let newState = props.data;
+  //   let options = _.cloneDeep(optionsList);
+  //   newState.formData[id].value = _.cloneDeep(options);
+  //   if (id === 'grantDetails') {
+  //     options.map(item => {
+  //       if (item.value) {
+  //         return newState.grantFormData.push(
+  //           _.cloneDeep(props.data.grantFormData[0]),
+  //         );
+  //       }
+  //       return null;
+  //     });
+  //   }
+  //   props.change(newState);
+  // };
 
   const renderTemplates = data => {
     let formTemplate = '';
@@ -200,35 +219,30 @@ const FormFields = props => {
                   </option>
                 ))}
               </Input>
-            </Col>
-            <Col sm={{ size: 7, offset: 5 }}>
-              <Link to={`/organizations/add`}>
+              <Link className="float-right" to={`/organizations/add`}>
                 <small>Добавить организацию</small>
               </Link>
             </Col>
           </FormGroup>
         );
         break;
-      case 'multipleselect':
+      case 'multipleselect': {
+        const { options } = props.data.formData[data.id].config;
         formTemplate = (
           <FormGroup row className="py-0 my-0">
             {showLabel(values.label, values.labelText)}
             <Col sm={7}>
-              <MultiSelect
-                options={values.value}
-                optionClicked={optionsList =>
-                  optionClicked(optionsList, data.id)
-                }
-                selectedBadgeClicked={optionsList =>
-                  selectedBadgeClicked(optionsList, data.id)
-                }
+              <Selector
+                options={options}
+                optionClicked={optionsList => {
+                  optionClicked(optionsList, data.id);
+                }}
               />
-
-              {/* <FormText>{values.value}</FormText> */}
             </Col>
           </FormGroup>
         );
         break;
+      }
       case 'file':
         formTemplate = (
           <FormGroup row className="py-0 my-0">
@@ -263,6 +277,24 @@ const FormFields = props => {
               );
             })}
           </div>
+        );
+        break;
+      case 'switch':
+        formTemplate = (
+          <FormGroup row className="py-0 my-0">
+            {showLabel(values.label, values.labelText)}
+            <Col sm={7} style={{ paddingTop: 7 }}>
+              <FormGroup check inline>
+                <CustomInput
+                  {...values.config}
+                  type="switch"
+                  id="exampleCustomCheckbox"
+                  checked={values.value}
+                  onChange={event => switchHandler(event, data.id)}
+                />
+              </FormGroup>
+            </Col>
+          </FormGroup>
         );
         break;
       default:

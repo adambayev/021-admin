@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-
 import AddSubject from '../../components/Subjects/Add';
 import axios from 'axios';
-
-import * as _ from 'lodash';
 
 class AddSubjectContainer extends Component {
   constructor() {

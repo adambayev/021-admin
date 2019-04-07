@@ -1,12 +1,11 @@
 import React from 'react';
 
 import GrantFields from '../../components/Widget/GrantFields';
-import FormFields from '../../components/Widget/FormFields';
 import RequirementsFields from '../../components/Widget/RequirementsFields';
 import DescriptionFields from '../../components/Widget/DescriptionFields';
 import ProcessOfFilingFields from '../../components/Widget/ProcessOfFilingFields';
-import AdditionalForm from '../../components/Widget/AdditionalForm';
 import * as _ from 'lodash';
+import Tabs from '../../components/Tabs/Tabs';
 
 import {
   Button,
@@ -20,10 +19,10 @@ import {
   Label,
   Input,
   Collapse,
+  Alert,
 } from 'reactstrap';
 
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import InputRange from 'react-input-range';
 
 const AddGrant = props => {
   const handleHeaderClick = name => {
@@ -33,21 +32,47 @@ const AddGrant = props => {
   const checkboxHandler = (event, dataId) => {
     let newState = props.data;
     newState.grantDetails.options.map((item, i) => {
-      return item.id == dataId
+      return item.id === dataId
         ? (newState.grantDetails.options[i].checked = event.target.checked)
         : null;
     });
 
     props.data.grantDetails.options.map(item => {
-      if (item.checked && item.id == dataId) {
-        newState.grantDetails.value.push(
-          _.cloneDeep(props.data.grantFormData[0]),
-        );
+      const newItem = props.data.grantFormData[0];
+      newItem.programCategoryId.value = dataId;
+      if (item.checked && item.id === dataId) {
+        return newState.grantDetails.value.push(_.cloneDeep(newItem));
       }
+      return null;
     });
 
     props.updateDetails(newState);
     console.log(newState.grantDetails.value);
+  };
+
+  const onDublicate = dataId => {
+    console.log(dataId);
+
+    let newState = props.data;
+
+    props.data.grantDetails.value
+      .filter(data => data.programCategoryId.value === dataId)
+      .map((item, i) => {
+        if (i === 0) {
+          const newItem = _.cloneDeep(item);
+          return newState.grantDetails.value.push(_.cloneDeep(newItem));
+        }
+        return null;
+      });
+
+    props.updateDetails(newState);
+  };
+
+  const headerStyle = {
+    padding: 0,
+    transform: props.data.isOpenMain ? 'rotate(0deg)' : 'rotate(-90deg)',
+    transitionDuration: '0.3s',
+    transitionProperty: 'transform',
   };
 
   return (
@@ -56,16 +81,7 @@ const AddGrant = props => {
         <Card>
           <CardHeader onClick={event => handleHeaderClick('Main')}>
             Общая информация
-            <MdKeyboardArrowDown
-              style={{
-                padding: 0,
-                transform: props.data.isOpenMain
-                  ? 'rotate(0deg)'
-                  : 'rotate(-90deg)',
-                transitionDuration: '0.3s',
-                transitionProperty: 'transform',
-              }}
-            />
+            <MdKeyboardArrowDown style={headerStyle} />
           </CardHeader>
           <Collapse isOpen={props.data.isOpenMain}>
             <CardBody>
@@ -85,16 +101,7 @@ const AddGrant = props => {
         <Card>
           <CardHeader onClick={event => handleHeaderClick('Descriptions')}>
             Описание
-            <MdKeyboardArrowDown
-              style={{
-                padding: 0,
-                transform: props.data.isOpenDescriptions
-                  ? 'rotate(0deg)'
-                  : 'rotate(-90deg)',
-                transitionDuration: '0.3s',
-                transitionProperty: 'transform',
-              }}
-            />
+            <MdKeyboardArrowDown style={headerStyle} />
           </CardHeader>
           <Collapse isOpen={props.data.isOpenDescriptions}>
             <CardBody>
@@ -113,16 +120,7 @@ const AddGrant = props => {
         <Card>
           <CardHeader onClick={event => handleHeaderClick('Requirements')}>
             Требования
-            <MdKeyboardArrowDown
-              style={{
-                padding: 0,
-                transform: props.data.isOpenRequirements
-                  ? 'rotate(0deg)'
-                  : 'rotate(-90deg)',
-                transitionDuration: '0.3s',
-                transitionProperty: 'transform',
-              }}
-            />
+            <MdKeyboardArrowDown style={headerStyle} />
           </CardHeader>
           <Collapse isOpen={props.data.isOpenRequirements}>
             <CardBody>
@@ -141,16 +139,7 @@ const AddGrant = props => {
         <Card>
           <CardHeader onClick={event => handleHeaderClick('ProcessOfFiling')}>
             Процесс подачи стипендии
-            <MdKeyboardArrowDown
-              style={{
-                padding: 0,
-                transform: props.data.isOpenProcessOfFiling
-                  ? 'rotate(0deg)'
-                  : 'rotate(-90deg)',
-                transitionDuration: '0.3s',
-                transitionProperty: 'transform',
-              }}
-            />
+            <MdKeyboardArrowDown style={headerStyle} />
           </CardHeader>
           <Collapse isOpen={props.data.isOpenProcessOfFiling}>
             <CardBody>
@@ -169,16 +158,7 @@ const AddGrant = props => {
         <Card>
           <CardHeader onClick={event => handleHeaderClick('Details')}>
             Вид программы и стоимость гранта
-            <MdKeyboardArrowDown
-              style={{
-                padding: 0,
-                transform: props.data.isOpenDetails
-                  ? 'rotate(0deg)'
-                  : 'rotate(-90deg)',
-                transitionDuration: '0.3s',
-                transitionProperty: 'transform',
-              }}
-            />
+            <MdKeyboardArrowDown style={headerStyle} />
           </CardHeader>
           <Collapse isOpen={props.data.isOpenDetails}>
             <CardBody>
@@ -198,31 +178,29 @@ const AddGrant = props => {
               </Form>
             </CardBody>
             <Col xl={12} lg={12} md={12}>
-              <Card>
-                {props.data.grantDetails.options.map((item, i) => {
-                  if (item.checked) {
-                    return (
-                      <Row key={item.id}>
-                        <Col xl={12} lg={12} md={12}>
-                          <Card>
-                            <CardHeader>{item.name}</CardHeader>
-
-                            <CardBody>
-                              <AdditionalForm
-                                formData={props.data.grantDetails.value[i]}
-                                dataId={item.id}
-                                change={(newState, dataId) =>
-                                  props.updateGrantsForm(newState, dataId)
-                                }
-                              />
-                            </CardBody>
-                          </Card>
-                        </Col>
-                      </Row>
-                    );
-                  }
-                })}
-              </Card>
+              {props.data.grantDetails.options.map((item, i) => {
+                if (item.checked) {
+                  return (
+                    <Row key={item.id}>
+                      <Col xl={12} lg={12} md={12}>
+                        <Card>
+                          <Tabs
+                            item={item}
+                            formData={props.data.grantDetails}
+                            itemId={i}
+                            dataId={item.id}
+                            change={(newState, dataId) =>
+                              props.updateGrantsForm(newState, dataId)
+                            }
+                            onDublicate={dataId => onDublicate(dataId)}
+                          />
+                        </Card>
+                      </Col>
+                    </Row>
+                  );
+                }
+                return null;
+              })}
             </Col>
           </Collapse>
         </Card>
@@ -235,41 +213,13 @@ const AddGrant = props => {
               Submit
             </Button>
           </CardBody>
+          {props.error && (
+            <CardBody>
+              <Alert color="secondary">{props.error}</Alert>
+            </CardBody>
+          )}
         </Card>
       </Col>
-
-      {/* <Col xl={12} lg={12} md={12}>
-        <Card>
-          {props.data.formData.grantDetails.value.map(item => {
-            if (item.value) {
-              return (
-                <Row key={item.id}>
-                  <Col xl={12} lg={12} md={12}>
-                    <Card>
-                      <CardHeader
-                        onClick={event => handleHeaderClick('Details')}
-                      >
-                        {item.name}
-                      </CardHeader>
-                      {props.data.isOpenDetails && (
-                        <CardBody>
-                          <AdditionalForm
-                            formData={props.data.grantFormData[item.id]}
-                            dataId={item.id}
-                            change={(newState, dataId) =>
-                              props.updateGrantsForm(newState, dataId)
-                            }
-                          />
-                        </CardBody>
-                      )}
-                    </Card>
-                  </Col>
-                </Row>
-              );
-            }
-          })}
-        </Card>
-      </Col> */}
     </Row>
   );
 };

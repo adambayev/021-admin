@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Col, FormGroup, Input, Label, FormText, Row } from 'reactstrap';
-import MultiSelect from './MultiSelect';
+import { Col, FormGroup, Input, Label } from 'reactstrap';
+// import MultiSelect from './MultiSelect';
 import * as _ from 'lodash';
 import AgeRange from '../../components/InputRange';
 import { TextField } from 'components';
+import Selector from './Selector';
 
 const FormFields = props => {
   const renderFields = () => {
@@ -46,18 +47,32 @@ const FormFields = props => {
     props.change(newState);
   };
 
+  const rangeHandler = (value, id) => {
+    let newState = props.data;
+    newState[id].value = value;
+    props.change(newState);
+  };
+
+  // const optionClicked = (optionsList, id) => {
+  //   let newState = props.data;
+  //   let options = _.cloneDeep(optionsList);
+  //   newState[id].value = _.cloneDeep(options);
+  //   props.change(newState);
+  // };
+
   const optionClicked = (optionsList, id) => {
     let newState = props.data;
     let options = _.cloneDeep(optionsList);
     newState[id].value = _.cloneDeep(options);
-    props.change(newState);
+    return props.change(newState);
   };
-  const selectedBadgeClicked = (optionsList, id) => {
-    let newState = props.data;
-    let options = _.cloneDeep(optionsList);
-    newState[id].value = _.cloneDeep(options);
-    props.change(newState);
-  };
+
+  // const selectedBadgeClicked = (optionsList, id) => {
+  //   let newState = props.data;
+  //   let options = _.cloneDeep(optionsList);
+  //   newState[id].value = _.cloneDeep(options);
+  //   props.change(newState);
+  // };
 
   const renderTemplates = data => {
     let formTemplate = '';
@@ -107,30 +122,34 @@ const FormFields = props => {
           </FormGroup>
         );
         break;
-      case 'multipleselect':
+      case 'multipleselect': {
+        const { options } = props.data[data.id].config;
         formTemplate = (
           <FormGroup row className="py-0 my-0">
             {showLabel(values.label, values.labelText)}
             <Col sm={9}>
-              <MultiSelect
-                options={values.value}
-                optionClicked={optionsList =>
-                  optionClicked(optionsList, data.id)
-                }
-                selectedBadgeClicked={optionsList =>
-                  selectedBadgeClicked(optionsList, data.id)
-                }
+              <Selector
+                options={options}
+                optionClicked={optionsList => {
+                  optionClicked(optionsList, data.id);
+                }}
               />
             </Col>
           </FormGroup>
         );
         break;
+      }
       case 'inputrange':
         formTemplate = (
           <FormGroup row className="py-0 my-0">
             {showLabel(values.label, values.labelText)}
             <Col sm={9}>
-              <AgeRange />
+              <AgeRange
+                value={values.value}
+                minValue={values.config.minValue}
+                maxValue={values.config.maxValue}
+                changedValue={value => rangeHandler(value, data.id)}
+              />
             </Col>
           </FormGroup>
         );

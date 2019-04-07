@@ -1,6 +1,14 @@
 import React from 'react';
-
-import { Col, FormGroup, Input, Label, Row } from 'reactstrap';
+import {
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+  Form,
+  CustomInput,
+} from 'reactstrap';
+import InputWithDropdown from '../InputWithDropdown';
 
 const AdditionalForm = props => {
   const renderFields = () => {
@@ -9,7 +17,7 @@ const AdditionalForm = props => {
     const formArray = [];
 
     for (let elementName in props.formData) {
-      if (props.formData[elementName].position == 'left') {
+      if (props.formData[elementName].position === 'left') {
         leftFormArray.push({
           id: elementName,
           settings: props.formData[elementName],
@@ -55,6 +63,97 @@ const AdditionalForm = props => {
   const changeHandler = (event, id) => {
     let newState = props.formData;
     newState[id].value = event.target.value;
+
+    props.change(newState, props.dataId);
+    calculateGrantSum();
+    calculateTotalFund();
+  };
+
+  const calculateGrantSum = () => {
+    let newState = props.formData;
+
+    if (
+      newState['duration'].value.amount !== 0 &&
+      newState['amount'].value !== 0 &&
+      newState['totalCost'].value.amount !== 0 &&
+      newState['grantPercent'].value.amount !== 0 &&
+      newState['scholarship'].value.amount !== 0
+    ) {
+      const calculatedScholarship = +newState['scholarship'].value.amount * 12;
+      const percentGrant =
+        (+newState['grantPercent'].value.amount / 100) *
+        +newState['totalCost'].value.amount;
+
+      if (newState['grantPercent'].value.isPercentage) {
+        newState['grantSum'].value =
+          +newState['duration'].value.amount *
+          (percentGrant + calculatedScholarship);
+      } else {
+        newState['grantSum'].value =
+          +newState['duration'].value.amount *
+          (calculatedScholarship + +newState['grantPercent'].value.amount);
+      }
+    } else {
+      newState['grantSum'].value = '';
+    }
+
+    props.change(newState, props.dataId);
+  };
+
+  const calculateTotalFund = () => {
+    let newState = props.formData;
+
+    if (
+      newState['duration'].value.amount !== 0 &&
+      newState['amount'].value !== 0 &&
+      newState['totalCost'].value.amount !== 0 &&
+      newState['grantPercent'].value.amount !== 0 &&
+      newState['scholarship'].value.amount !== 0 &&
+      newState['amount'].value !== 0 &&
+      newState['grantSum'].value !== 0
+    ) {
+      newState['totalFund'].value =
+        +newState['grantSum'].value * +newState['amount'].value;
+    } else {
+      newState['totalFund'].value = '';
+    }
+    props.change(newState, props.dataId);
+  };
+
+  const dropdownHandler = (value, id) => {
+    let newState = props.formData;
+    newState[id].value.currency = value;
+    props.change(newState, props.dataId);
+    calculateGrantSum();
+    calculateTotalFund();
+  };
+
+  const dropdownInput = (event, id) => {
+    let newState = props.formData;
+    newState[id].value.amount = event.target.value;
+    props.change(newState, props.dataId);
+    calculateGrantSum();
+    calculateTotalFund();
+  };
+
+  const inputRadioHandler = (event, id) => {
+    let newState = props.formData;
+    newState[id].value.amount = event.target.value;
+    props.change(newState, props.dataId);
+    calculateGrantSum();
+    calculateTotalFund();
+  };
+
+  const switchHandler = (event, id) => {
+    let newState = props.formData;
+    newState[id].value = event.target.checked;
+    props.change(newState, props.dataId);
+  };
+
+  const radioChangeHandler = (event, id, choice) => {
+    console.log(event.target.value);
+    let newState = props.formData;
+    newState[id].value.isPercentage = choice;
     props.change(newState, props.dataId);
   };
 
@@ -94,6 +193,86 @@ const AdditionalForm = props => {
                   </option>
                 ))}
               </Input>
+            </Col>
+          </FormGroup>
+        );
+        break;
+      case 'dropdowninput':
+        formTemplate = (
+          <FormGroup row className="py-0 my-0">
+            {showLabel(values.label, values.labelText)}
+            <Col sm={7}>
+              <InputWithDropdown
+                value={values.value}
+                optionHeader={values.config.header}
+                options={values.config.options}
+                clickedItem={value => dropdownHandler(value, data.id)}
+                changedValue={value => dropdownInput(value, data.id)}
+              />
+            </Col>
+          </FormGroup>
+        );
+        break;
+      case 'inputwithradio':
+        formTemplate = (
+          <FormGroup row className="py-0 my-0">
+            {showLabel(values.label, values.labelText)}
+            <Col sm={7}>
+              <Form>
+                <FormGroup check inline>
+                  <CustomInput
+                    type="radio"
+                    id={`percentRadio-${props.elementId}`}
+                    name="customRadio"
+                    label="Процент"
+                    checked={values.value.isPercentage}
+                    onChange={event => {
+                      radioChangeHandler(event, data.id, true);
+                      dropdownHandler('%', data.id);
+                    }}
+                  />
+                </FormGroup>
+                <FormGroup check inline>
+                  <CustomInput
+                    type="radio"
+                    id={`sumRadio-${props.elementId}`}
+                    name="customRadio"
+                    label="Сумма"
+                    checked={!values.value.isPercentage}
+                    onChange={event => {
+                      radioChangeHandler(event, data.id, false);
+                      dropdownHandler('KZT', data.id);
+                    }}
+                  />
+                </FormGroup>
+              </Form>
+              <InputWithDropdown
+                value={values.value}
+                optionHeader={values.value.isPercentage ? ['%'] : ['KZT']}
+                options={values.value.isPercentage ? ['%'] : ['KZT']}
+                changedValue={value => inputRadioHandler(value, data.id)}
+                clickedItem={value => dropdownHandler(value, data.id)}
+              />
+            </Col>
+          </FormGroup>
+        );
+        break;
+      case 'switch':
+        formTemplate = (
+          <FormGroup row className="py-0 my-0">
+            {showLabel(values.label, values.labelText)}
+            <Col sm={7} style={{ paddingTop: 7 }}>
+              <FormGroup check inline>
+                <CustomInput
+                  type="switch"
+                  id={`${values.config.name}-${props.elementId}`}
+                  checked={values.value}
+                  label="Перелет покрывается"
+                  onChange={event =>
+                    switchHandler(event, data.id, data.grantId)
+                  }
+                />
+              </FormGroup>
             </Col>
           </FormGroup>
         );

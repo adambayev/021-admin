@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
-
 import OrganizationsList from '../../components/Organizations/List';
-
-import { Col, Row } from 'reactstrap';
 
 class OrganizationsListContainer extends Component {
   constructor() {

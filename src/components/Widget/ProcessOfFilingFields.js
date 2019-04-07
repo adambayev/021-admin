@@ -1,9 +1,5 @@
 import React from 'react';
-
-import { Col, FormGroup, Input, Label, FormText, Row } from 'reactstrap';
-import MultiSelect from './MultiSelect';
-import * as _ from 'lodash';
-import AgeRange from '../InputRange';
+import { Col, FormGroup, Label, CustomInput } from 'reactstrap';
 import { TextField } from 'components';
 
 const FormFields = props => {
@@ -34,17 +30,17 @@ const FormFields = props => {
     ) : null;
   };
 
-  const changeHandler = (event, id) => {
-    let newState = props.data;
-    newState[id].value = event.target.value;
-    props.change(newState);
-  };
-
   const changeFileHandler = (event, id) => {
     let newState = props.data;
     console.log(newState);
     //newState.processFile = event.target.files[0];
-    newState[id].value = event.target.value;
+    newState[id].value.push(event.target.value);
+    props.change(newState);
+  };
+
+  const changeTextFieldHandler = (value, id) => {
+    let newState = props.data;
+    newState[id].value = value;
     props.change(newState);
   };
 
@@ -54,16 +50,35 @@ const FormFields = props => {
 
     switch (values.element) {
       case 'file':
+        formTemplate = props.data.file.value.map((item, i) => {
+          return (
+            <FormGroup key={i} row className="py-0 my-0">
+              {showLabel(values.label, values.labelText)}
+              <Col sm={9}>
+                <CustomInput
+                  type="file"
+                  id="exampleCustomFileBrowser"
+                  name="customFile"
+                  label={values.value[0]}
+                  {...values.config}
+                  value=""
+                  onChange={event => changeFileHandler(event, data.id)}
+                />
+              </Col>
+            </FormGroup>
+          );
+        });
+        break;
+      case 'textareaWithEditor':
         formTemplate = (
           <FormGroup row className="py-0 my-0">
             {showLabel(values.label, values.labelText)}
-            <Col sm={7}>
-              <Input
-                {...values.config}
-                value={values.value}
-                onChange={event => changeFileHandler(event, data.id)}
+            <Col sm={9}>
+              <TextField
+                values={values}
+                withEditor={true}
+                onChange={value => changeTextFieldHandler(value, data.id)}
               />
-              <FormText color="muted">{values.text}</FormText>
             </Col>
           </FormGroup>
         );

@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Row,
-  Table,
-  Button,
-} from 'reactstrap';
+import { Card, Col, Row, Table, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
@@ -21,20 +13,20 @@ const DataTable = props => {
             <Row>
               <Col xl={12} lg={12} md={12}>
                 <Link
-                  class="d-flex justify-content-end text-decoration-none"
+                  className="d-flex justify-content-end text-decoration-none"
                   to={`/grantGivers/add`}
                 >
                   <Button color="primary">Добавить грантодателя</Button>
                 </Link>
               </Col>
             </Row>
-            <Table {...{ ['default']: true }}>
+            <Table>
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Название</th>
-                  <th class="text-center">Изменить</th>
-                  <th class="text-center">Удалить</th>
+                  <th className="text-center">Изменить</th>
+                  <th className="text-center">Удалить</th>
                 </tr>
               </thead>
               <tbody>

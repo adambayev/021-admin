@@ -104,7 +104,7 @@ class DataTable extends React.Component {
                 </Col>
                 <Col xl="6" lg="6" md="6" sm="12">
                   <Link
-                    class="d-flex justify-content-end text-decoration-none"
+                    className="d-flex justify-content-end text-decoration-none"
                     to={`/subjects/add`}
                   >
                     <Button color="primary">Добавить сферу/дисциплину</Button>

@@ -1,8 +1,5 @@
 import React from 'react';
-
 import FormFields from '../../components/Widget/FormFields';
-import AdditionalForm from '../../components/Widget/AdditionalForm';
-
 import {
   Button,
   Card,
@@ -12,8 +9,6 @@ import {
   Form,
   FormGroup,
   Row,
-  Label,
-  Input,
 } from 'reactstrap';
 
 const DeleteSubject = props => {

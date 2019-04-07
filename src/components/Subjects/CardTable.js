@@ -13,7 +13,7 @@ const CardTable = props => {
 
   return (
     <Card body>
-      <Table {...{ ['default']: true }}>
+      <Table>
         <TableHeader />
         <tbody>{renderTable()}</tbody>
       </Table>

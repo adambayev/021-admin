@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
-
-import * as _ from 'lodash';
 import DeleteSubject from '../../components/Subjects/Delete';
 import Loader from '../../components/Widget/Loader';
 
@@ -33,7 +31,7 @@ class DeleteSubjectContainer extends Component {
       .then(response => {
         let newState = Object.assign({}, this.state);
 
-        let res = response.data.filter(a => a.id == this.props.params.id);
+        let res = response.data.filter(a => a.id === this.props.params.id);
 
         for (let key in this.state.formData) {
           newState.formData[key].value = res[0][key];

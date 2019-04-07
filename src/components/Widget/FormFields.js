@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Col, FormGroup, Input, Label, FormText, Row } from 'reactstrap';
+import { Col, FormGroup, Input, Label, FormText } from 'reactstrap';
 import { TextField } from 'components';
 import MultiSelect from './MultiSelect';
 import * as _ from 'lodash';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 const FormFields = props => {
   const renderFields = () => {
@@ -43,12 +42,6 @@ const FormFields = props => {
   const changeTextFieldHandler = (value, id) => {
     let newState = props.data;
     newState.formData[id].value = value;
-    props.change(newState);
-  };
-
-  const multipleSelectChangeHandler = (event, id) => {
-    let newState = props.data;
-    newState.formData[id].value.push(event.target.value);
     props.change(newState);
   };
 
