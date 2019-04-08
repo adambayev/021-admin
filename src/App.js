@@ -1,34 +1,36 @@
-import { STATE_SIGNUP } from 'components/AuthForm';
+// import { STATE_SIGNUP } from 'components/AuthForm';
 // import { STATE_LOGIN } from 'components/AuthForm';
-import GAListener from 'components/GAListener';
-import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
+// import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
 import AuthModalPage from 'pages/AuthModalPage';
-import AuthPage from 'pages/AuthPage';
+
 // pages
 //import DashboardPage from 'pages/DashboardPage';
-import Login from './containers/Login';
-import GrantPage from 'pages/Grants/GrantPage';
+
 import AddGrant from 'pages/Grants/AddGrant';
 import EditGrant from 'pages/Grants/EditGrant';
 import DeleteGrant from 'pages/Grants/DeleteGrant';
-import GrantGiverPage from 'pages/GrantGivers/GrantGiverPage';
-import AddGrantGiver from 'pages/GrantGivers/AddGrantGiver';
-import EditGrantGiver from 'pages/GrantGivers/EditGrantGiver';
-import DeleteGrantGiver from 'pages/GrantGivers/DeleteGrantGiver';
-import SubjectPage from 'pages/Subjects/SubjectPage';
-import AddSubject from 'pages/Subjects/AddSubject';
-import EditSubject from 'pages/Subjects/EditSubject';
-import DeleteSubject from 'pages/Subjects/DeleteSubject';
-import OrganizationPage from 'pages/Organizations/OrganizationPage';
 import AddOrganization from 'pages/Organizations/AddOrganization';
 import EditOrganization from 'pages/Organizations/EditOrganization';
 import DeleteOrganization from 'pages/Organizations/DeleteOrganization';
-import ProgramCategoryPage from 'pages/ProgramCategories/ProgramCategoryPage';
-import AddProgramCategory from 'pages/ProgramCategories/AddProgramCategory';
-import EditProgramCategory from 'pages/ProgramCategories/EditProgramCategory';
-import DeleteProgramCategory from 'pages/ProgramCategories/DeleteProgramCategory';
-import ProgramPage from 'pages/ProgramPage';
+
 import React from 'react';
+import { Provider } from 'react-redux';
+import store from './store';
+import jwt_decode from 'jwt-decode';
+import setAuthToken from './utils/setAuthToken';
+import { setCurrentUser } from './actions/authActions';
+
+import Register from './_components/auth/Register';
+import Login from './_components/auth/Login';
+
+import GrantsPage from './_components/pages/GrantsAndScholarship/GrantsPage';
+import {
+  OrganizationsPage,
+  CreateOrganization,
+} from './_components/pages/GrantsAndScholarship/Organizations';
+
+import { EmptyLayout, LayoutRoute, MainLayout } from './_components/layout';
+
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
@@ -37,25 +39,31 @@ import './styles/reduction.scss';
 //   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
 // };
 
+if (localStorage.jwtToken) {
+  setAuthToken(localStorage.jwtToken);
+
+  const decoded = jwt_decode(localStorage.jwtToken);
+
+  store.dispatch(setCurrentUser(decoded));
+}
+
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter>
-        <GAListener>
+      <Provider store={store}>
+        <BrowserRouter>
           <Switch>
+            <LayoutRoute
+              exact
+              path="/register"
+              layout={EmptyLayout}
+              component={Register}
+            />
             <LayoutRoute
               exact
               path="/login"
               layout={EmptyLayout}
               component={Login}
-            />
-            <LayoutRoute
-              exact
-              path="/signup"
-              layout={EmptyLayout}
-              component={props => (
-                <AuthPage {...props} authState={STATE_SIGNUP} />
-              )}
             />
             <LayoutRoute
               exact
@@ -71,15 +79,9 @@ class App extends React.Component {
             />
             <LayoutRoute
               exact
-              path="/register"
-              layout={MainLayout}
-              component={AuthPage}
-            />
-            <LayoutRoute
-              exact
               path="/grants"
               layout={MainLayout}
-              component={GrantPage}
+              component={GrantsPage}
             />
             <LayoutRoute
               exact
@@ -101,63 +103,15 @@ class App extends React.Component {
             />
             <LayoutRoute
               exact
-              path="/grantgivers"
-              layout={MainLayout}
-              component={GrantGiverPage}
-            />
-            <LayoutRoute
-              exact
-              path="/grantgivers/add"
-              layout={MainLayout}
-              component={AddGrantGiver}
-            />
-            <LayoutRoute
-              exact
-              path="/grantgivers/edit/:id"
-              layout={MainLayout}
-              component={EditGrantGiver}
-            />
-            <LayoutRoute
-              exact
-              path="/grantgivers/delete/:id"
-              layout={MainLayout}
-              component={DeleteGrantGiver}
-            />
-            <LayoutRoute
-              exact
-              path="/subjects"
-              layout={MainLayout}
-              component={SubjectPage}
-            />
-            <LayoutRoute
-              exact
-              path="/subjects/add"
-              layout={MainLayout}
-              component={AddSubject}
-            />
-            <LayoutRoute
-              exact
-              path="/subjects/edit/:id"
-              layout={MainLayout}
-              component={EditSubject}
-            />
-            <LayoutRoute
-              exact
-              path="/subjects/delete/:id"
-              layout={MainLayout}
-              component={DeleteSubject}
-            />
-            <LayoutRoute
-              exact
               path="/organizations"
               layout={MainLayout}
-              component={OrganizationPage}
+              component={OrganizationsPage}
             />
             <LayoutRoute
               exact
               path="/organizations/add"
               layout={MainLayout}
-              component={AddOrganization}
+              component={CreateOrganization}
             />
             <LayoutRoute
               exact
@@ -171,40 +125,10 @@ class App extends React.Component {
               layout={MainLayout}
               component={DeleteOrganization}
             />
-            <LayoutRoute
-              exact
-              path="/programcategories"
-              layout={MainLayout}
-              component={ProgramCategoryPage}
-            />
-            <LayoutRoute
-              exact
-              path="/programcategories/add"
-              layout={MainLayout}
-              component={AddProgramCategory}
-            />
-            <LayoutRoute
-              exact
-              path="/programcategories/edit/:id"
-              layout={MainLayout}
-              component={EditProgramCategory}
-            />
-            <LayoutRoute
-              exact
-              path="/programcategories/delete/:id"
-              layout={MainLayout}
-              component={DeleteProgramCategory}
-            />
-            <LayoutRoute
-              exact
-              path="/programs"
-              layout={MainLayout}
-              component={ProgramPage}
-            />
             <Redirect to="/" />
           </Switch>
-        </GAListener>
-      </BrowserRouter>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }

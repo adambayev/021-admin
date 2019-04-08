@@ -1,6 +1,6 @@
 // import logo200Image from 'assets/img/logo/logo_200.png';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
-import SourceLink from 'components/SourceLink';
+import SourceLink from '../../common/SourceLink';
 import React from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { MdExtension, MdKeyboardArrowDown, MdSend } from 'react-icons/md';
@@ -13,7 +13,7 @@ import {
   NavItem,
   NavLink as BSNavLink,
 } from 'reactstrap';
-import bn from 'utils/bemnames';
+import bn from '../../../utils/bemnames';
 
 const sidebarBackground = {
   backgroundImage: `url("${sidebarBgImage}")`,
@@ -58,7 +58,7 @@ class Sidebar extends React.Component {
           <Navbar>
             <SourceLink className="navbar-brand d-flex">
               <span className="text-white">
-                NEUPUSTI ADMIN <FaCheck />
+                NEUPUSTI ADMIN 2 <FaCheck />
               </span>
             </SourceLink>
           </Navbar>
