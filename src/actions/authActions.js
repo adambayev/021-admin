@@ -31,20 +31,16 @@ export const loginUser = userData => dispatch => {
     .post(`${URL}/users/login`, userData)
     .then(res => {
       const token = res.data.data.tokens.accessToken;
-      console.log('token');
-      console.log(res.data.data.tokens.accessToken);
       localStorage.setItem('jwtToken', token);
-      debugger;
       setAuthToken(token);
       // const decoded = jwt_decode(token);
       dispatch(setCurrentUser(res.data.data.user));
     })
-    .catch(response => {
-      console.log('err');
-      console.log(response);
+    .catch(err => {
+      const errors = err.response.data.errors;
       dispatch({
         type: GET_ERRORS,
-        payload: response.message,
+        payload: errors,
       });
     });
 };
