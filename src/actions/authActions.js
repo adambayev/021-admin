@@ -36,12 +36,13 @@ export const loginUser = userData => dispatch => {
       // const decoded = jwt_decode(token);
       dispatch(setCurrentUser(res.data.data.user));
     })
-    .catch(err =>
+    .catch(err => {
+      console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
-      }),
-    );
+      });
+    });
 };
 
 export const setCurrentUser = decoded => {

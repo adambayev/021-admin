@@ -12,6 +12,7 @@ import {
   Col,
   Card,
   Label,
+  FormFeedback,
 } from 'reactstrap';
 import logo200Image from 'assets/img/logo/logo_200.png';
 
@@ -31,7 +32,7 @@ class Login extends React.Component {
     }
 
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      this.setState({ errors: nextProps.errors.errors });
     }
   }
 
@@ -49,7 +50,7 @@ class Login extends React.Component {
   };
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value, errors: {} });
   };
 
   render() {
@@ -62,6 +63,7 @@ class Login extends React.Component {
     } = this.props;
 
     const { errors } = this.state;
+    console.log(errors.Email && errors.Email[0]);
 
     return (
       <Row
@@ -87,20 +89,26 @@ class Login extends React.Component {
               <FormGroup>
                 <Label for={usernameLabel}>{usernameLabel}</Label>
                 <Input
+                  invalid={errors.Email ? true : false}
                   {...usernameInputProps}
                   name="email"
                   value={this.state.email}
                   onChange={this.onChange}
                 />
+                {errors.Email && <FormFeedback>{errors.Email[0]}</FormFeedback>}
               </FormGroup>
               <FormGroup>
                 <Label for={passwordLabel}>{passwordLabel}</Label>
                 <Input
+                  invalid={errors.Password ? true : false}
                   {...passwordInputProps}
                   name="password"
                   value={this.state.password}
                   onChange={this.onChange}
                 />
+                {errors.Password && (
+                  <FormFeedback>{errors.Password[0]}</FormFeedback>
+                )}
               </FormGroup>
               <FormGroup check>
                 <Label check>
