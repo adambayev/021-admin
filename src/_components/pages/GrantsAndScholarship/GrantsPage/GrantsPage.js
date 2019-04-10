@@ -34,7 +34,7 @@ class GrantsPage extends Component {
         <Row>
           <Col>
             <Card body>
-              <AddButton buttonName="Добавить грант" />
+              <AddButton buttonName="Добавить грант" prefix="grants" />
               <ShowList
                 list={this.state.grantsList}
                 tableHeaders={this.state.tableHeaders}

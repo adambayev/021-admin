@@ -9,7 +9,7 @@ import AuthModalPage from 'pages/AuthModalPage';
 import AddGrant from 'pages/Grants/AddGrant';
 import EditGrant from 'pages/Grants/EditGrant';
 import DeleteGrant from 'pages/Grants/DeleteGrant';
-import AddOrganization from 'pages/Organizations/AddOrganization';
+// import AddOrganization from 'pages/Organizations/AddOrganization';
 import EditOrganization from 'pages/Organizations/EditOrganization';
 import DeleteOrganization from 'pages/Organizations/DeleteOrganization';
 
@@ -28,8 +28,8 @@ import {
   OrganizationsPage,
   CreateOrganization,
 } from './_components/pages/GrantsAndScholarship/Organizations';
-
 import { EmptyLayout, LayoutRoute, MainLayout } from './_components/layout';
+import PrivateRoute from './_components/common/PrivateRoute';
 
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Switch } from 'react-router-dom';
@@ -53,6 +53,12 @@ class App extends React.Component {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
+            <PrivateRoute
+              exact
+              path="/"
+              layout={MainLayout}
+              component={AddGrant}
+            />
             <LayoutRoute
               exact
               path="/register"
@@ -70,12 +76,6 @@ class App extends React.Component {
               path="/login-modal"
               layout={MainLayout}
               component={AuthModalPage}
-            />
-            <LayoutRoute
-              exact
-              path="/"
-              layout={MainLayout}
-              component={AddGrant}
             />
             <LayoutRoute
               exact

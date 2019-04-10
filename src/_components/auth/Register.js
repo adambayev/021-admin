@@ -1,4 +1,5 @@
 import logo200Image from 'assets/img/logo/logo_200.png';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
@@ -37,10 +38,10 @@ class Register extends React.Component {
     event.preventDefault();
 
     const newUser = {
-      name: this.state.name,
+      nickName: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      password2: this.state.password2,
+      passwordConfirm: this.state.password2,
     };
 
     console.log(newUser);
@@ -124,13 +125,6 @@ class Register extends React.Component {
                   onChange={this.onChange}
                 />
               </FormGroup>
-              <FormGroup check>
-                <Label check>
-                  <Input type="checkbox" />{' '}
-                  {this.isSignup ? 'Agree the terms and policy' : 'Remember me'}
-                </Label>
-              </FormGroup>
-              <hr />
               <Button
                 size="lg"
                 className="bg-gradient-theme-left border-0"
@@ -143,7 +137,7 @@ class Register extends React.Component {
               <div className="text-center pt-1">
                 <h6>or</h6>
                 <h6>
-                  <a href="#signup">Login</a>
+                  <Link to="/login">Login</Link>
                 </h6>
               </div>
               {errors.name && <div>Error</div>}

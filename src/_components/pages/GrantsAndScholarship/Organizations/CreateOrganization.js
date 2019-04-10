@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { createOrganization } from '../../../../actions/grantActions';
 
 import {
   Button,
@@ -8,7 +11,6 @@ import {
   Col,
   Form,
   FormGroup,
-  Row,
   Label,
   Input,
 } from 'reactstrap';
@@ -18,7 +20,19 @@ class CreateOrganization extends Component {
     super();
     this.state = {
       name: '',
+      success: false,
+      errors: {},
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.grant.success) {
+      this.setState({ success: true });
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
   onChange = e => {
@@ -34,7 +48,7 @@ class CreateOrganization extends Component {
 
     console.log('Вот так вот');
 
-    // this.props.loginUser(userData);
+    this.props.createOrganization(data);
   };
 
   render() {
@@ -72,4 +86,15 @@ class CreateOrganization extends Component {
   }
 }
 
-export default CreateOrganization;
+CreateOrganization.propTypes = {
+  errors: PropTypes.object.isRequired,
+};
+
+const mapDispatchToProps = state => ({
+  errors: state.errors,
+});
+
+export default connect(
+  mapDispatchToProps,
+  { createOrganization },
+)(CreateOrganization);

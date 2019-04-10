@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { loginUser } from '../../actions/authActions';
 import {
   Button,
   Form,
@@ -12,7 +14,6 @@ import {
   Label,
 } from 'reactstrap';
 import logo200Image from 'assets/img/logo/logo_200.png';
-import { loginUser } from '../../actions/authActions';
 
 class Login extends React.Component {
   constructor() {
@@ -101,6 +102,13 @@ class Login extends React.Component {
                   onChange={this.onChange}
                 />
               </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input type="checkbox" />{' '}
+                  {this.isSignup ? 'Agree the terms and policy' : 'Remember me'}
+                </Label>
+              </FormGroup>
+              <hr />
               <Button
                 size="lg"
                 className="bg-gradient-theme-left border-0"
@@ -109,6 +117,12 @@ class Login extends React.Component {
               >
                 Login
               </Button>
+              <div className="text-center pt-1">
+                <h6>or</h6>
+                <h6>
+                  <Link to="/register">Signup</Link>
+                </h6>
+              </div>
               {errors.name && <div>Error</div>}
             </Form>
           </Card>

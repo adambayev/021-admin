@@ -5,6 +5,7 @@ import { fetchOrganizations } from '../../../../actions/grantActions';
 import Page from '../../../common/Page';
 import AddButton from '../../../common/AddButton';
 import ShowList from '../../../common/ShowList';
+import Spinner from '../../../common/Spinner';
 
 import { Row, Col, Card } from 'reactstrap';
 
@@ -29,20 +30,28 @@ class OrganizationsPage extends Component {
   }
 
   render() {
+    let organizationContent;
+
+    if (this.props.loading) {
+      organizationContent = <Spinner />;
+    } else {
+      organizationContent = (
+        <Card body>
+          <AddButton buttonName="Добавить организацию" prefix="organizations" />
+          <ShowList
+            list={this.state.organizationsList}
+            tableHeaders={this.state.tableHeaders}
+            tableBody={this.state.tableBody}
+            prefix="organizations"
+          />
+        </Card>
+      );
+    }
+
     return (
       <Page title="Forms" breadcrumbs={[{ name: 'Grants', active: true }]}>
         <Row>
-          <Col>
-            <Card body>
-              <AddButton buttonName="Добавить организацию" />
-              <ShowList
-                list={this.state.organizationsList}
-                tableHeaders={this.state.tableHeaders}
-                tableBody={this.state.tableBody}
-                prefix="organizations"
-              />
-            </Card>
-          </Col>
+          <Col>{organizationContent}</Col>
         </Row>
       </Page>
     );
@@ -51,6 +60,7 @@ class OrganizationsPage extends Component {
 
 const mapStateToProps = state => ({
   organizations: state.grant.organizations,
+  loading: state.grant.loading,
 });
 
 export default connect(

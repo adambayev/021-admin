@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   FETCH_ORGANIZATIONS_REQUEST,
+  ORGANIZATIONS_LOADING,
   FETCH_GRANTS_REQUEST,
   CREATE_ORGANIZATION_SUCCESS,
   CREATE_ORGANIZATION_FAILURE,
@@ -8,12 +9,19 @@ import {
 import { URL } from '../config';
 
 export const fetchOrganizations = () => dispatch => {
-  axios.get(`${URL}/Organizations`).then(response => {
+  dispatch(setOrganizationsLoading());
+  axios.get(`${URL}/organizations`).then(response => {
     dispatch({
       type: FETCH_ORGANIZATIONS_REQUEST,
       payload: response.data.data,
     });
   });
+};
+
+export const setOrganizationsLoading = () => {
+  return {
+    type: ORGANIZATIONS_LOADING,
+  };
 };
 
 export const createOrganization = data => dispatch => {
