@@ -63,7 +63,6 @@ class Login extends React.Component {
     } = this.props;
 
     const { errors } = this.state;
-    console.log(errors.Email && errors.Email[0]);
 
     return (
       <Row
@@ -89,24 +88,26 @@ class Login extends React.Component {
               <FormGroup>
                 <Label for={usernameLabel}>{usernameLabel}</Label>
                 <Input
-                  invalid={errors.Email ? true : false}
+                  invalid={errors && errors.Email ? true : false}
                   {...usernameInputProps}
                   name="email"
                   value={this.state.email}
                   onChange={this.onChange}
                 />
-                {errors.Email && <FormFeedback>{errors.Email[0]}</FormFeedback>}
+                {errors && errors.Email && (
+                  <FormFeedback>{errors.Email[0]}</FormFeedback>
+                )}
               </FormGroup>
               <FormGroup>
                 <Label for={passwordLabel}>{passwordLabel}</Label>
                 <Input
-                  invalid={errors.Password ? true : false}
+                  invalid={errors && errors.Password ? true : false}
                   {...passwordInputProps}
                   name="password"
                   value={this.state.password}
                   onChange={this.onChange}
                 />
-                {errors.Password && (
+                {errors && errors.Password && (
                   <FormFeedback>{errors.Password[0]}</FormFeedback>
                 )}
               </FormGroup>
@@ -131,7 +132,6 @@ class Login extends React.Component {
                   <Link to="/register">Signup</Link>
                 </h6>
               </div>
-              {errors.name && <div>Error</div>}
             </Form>
           </Card>
         </Col>
