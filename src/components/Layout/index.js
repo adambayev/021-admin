@@ -1,7 +1,17 @@
-export { default as Content } from './Content';
-export { default as EmptyLayout } from './EmptyLayout';
-export { default as Footer } from './Footer';
-export { default as Header } from './Header';
-export { default as LayoutRoute } from './LayoutRoute';
-export { default as MainLayout } from './MainLayout';
-export { default as Sidebar } from './Sidebar';
+import Content from './Content';
+import EmptyLayout from './EmptyLayout';
+import Footer from './Footer';
+import Header from './Header';
+import LayoutRoute from './LayoutRoute';
+import MainLayout from './MainLayout';
+import Sidebar from './Sidebar';
+
+export {
+  Content,
+  EmptyLayout,
+  Footer,
+  Header,
+  LayoutRoute,
+  MainLayout,
+  Sidebar,
+};

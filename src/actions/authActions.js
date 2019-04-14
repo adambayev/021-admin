@@ -1,13 +1,9 @@
 import axios from 'axios';
 import { GET_ERRORS, SET_CURRENT_USER } from './types';
 import setAuthToken from '../utils/setAuthToken';
-// import jwt_decode from 'jwt-decode';
-
-//const URL = process.env.REACT_APP_URL;
 import { URL } from '../config';
 
 export const registerUser = (userData, history) => dispatch => {
-  debugger;
   axios
     .post(`${URL}/Users/register`, userData)
     .then(response => {
@@ -33,7 +29,6 @@ export const loginUser = userData => dispatch => {
       const token = res.data.data.tokens.accessToken;
       localStorage.setItem('jwtToken', token);
       setAuthToken(token);
-      // const decoded = jwt_decode(token);
       dispatch(setCurrentUser(res.data.data.user));
     })
     .catch(err => {

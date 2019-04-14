@@ -2,6 +2,7 @@ import {
   FETCH_ORGANIZATIONS_REQUEST,
   CREATE_ORGANIZATION_SUCCESS,
   FETCH_GRANTS_REQUEST,
+  FETCH_PAGED_GRANTS_REQUEST,
   ADD_GRANT_VALUE,
   ADD_FILE,
   FETCH_GRANTGIVERS_REQUEST,
@@ -16,6 +17,7 @@ const initialState = {
   grants: [],
   file: {},
   grantsList: [],
+  pagedGrantsList: [],
   grantGivers: [],
   subjects: [],
   locations: [],
@@ -41,6 +43,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         grantsList: action.payload,
+        loading: false,
+      };
+    case FETCH_PAGED_GRANTS_REQUEST:
+      return {
+        ...state,
+        pagedGrantsList: action.payload,
         loading: false,
       };
     case ADD_GRANT_VALUE:

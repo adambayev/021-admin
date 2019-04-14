@@ -4,6 +4,7 @@ import {
   CREATE_ORGANIZATION_SUCCESS,
   CREATE_ORGANIZATION_FAILURE,
   FETCH_GRANTS_REQUEST,
+  FETCH_PAGED_GRANTS_REQUEST,
   CREATE_GRANT_SUCCESS,
   CREATE_GRANT_FAILURE,
   ADD_GRANT_VALUE,
@@ -45,7 +46,7 @@ export const createOrganization = data => dispatch => {
 
 export const fetchGrants = () => dispatch => {
   dispatch(setProgramLoading());
-  axios.get(`${URL}/Grants`).then(response => {
+  axios.get(`${URL}/grants`).then(response => {
     dispatch({
       type: FETCH_GRANTS_REQUEST,
       payload: response.data.data,
@@ -53,10 +54,18 @@ export const fetchGrants = () => dispatch => {
   });
 };
 
+export const fetchPagedGrants = (page, size) => dispatch => {
+  dispatch(setProgramLoading());
+  axios.get(`${URL}/grants/${page}/${size}`).then(response => {
+    dispatch({
+      type: FETCH_PAGED_GRANTS_REQUEST,
+      payload: response.data.data,
+    });
+  });
+};
+
 export const createGrant = (file, data) => dispatch => {
-  debugger;
   fileUpload(file, data).then(response => {
-    console.log(response.data);
     response.data.ok
       ? dispatch({
           type: CREATE_GRANT_SUCCESS,
