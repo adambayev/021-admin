@@ -26,7 +26,7 @@ class GrantDetailsSection extends Component {
           totalCost: {
             position: 'left',
             element: 'dropdowninput',
-            value: { currency: 'KZT' },
+            value: { currency: 'KZT', amount: 0 },
             label: true,
             labelText: 'Стоимость обучения в год',
             config: {
@@ -57,7 +57,7 @@ class GrantDetailsSection extends Component {
             value: {
               isPercentage: true,
               currency: '%',
-              amount: '',
+              amount: 0,
             },
             label: true,
             labelText: 'Покрытие стоимости обучения на одного человека',
@@ -74,7 +74,7 @@ class GrantDetailsSection extends Component {
           scholarship: {
             position: 'right',
             element: 'dropdowninput',
-            value: { currency: 'KZT' },
+            value: { currency: 'KZT', amount: 0 },
             label: true,
             labelText: 'Ежемесячная стипендия',
             config: {
@@ -101,7 +101,7 @@ class GrantDetailsSection extends Component {
           duration: {
             position: 'right',
             element: 'dropdowninput',
-            value: { currency: 'месяцы', amount: '' },
+            value: { currency: 'месяцы', amount: 0 },
             label: true,
             labelText: 'Длительность программы',
             config: {
@@ -115,7 +115,7 @@ class GrantDetailsSection extends Component {
           amount: {
             position: 'left',
             element: 'input',
-            value: '',
+            value: 0,
             label: true,
             labelText: 'Количество грантов',
             config: {
@@ -127,7 +127,7 @@ class GrantDetailsSection extends Component {
           grantSum: {
             position: 'right',
             element: 'input',
-            value: '',
+            value: 0,
             label: true,
             labelText: 'Общая сумма гранта на человека',
             config: {
@@ -143,7 +143,7 @@ class GrantDetailsSection extends Component {
           totalFund: {
             position: 'right',
             element: 'input',
-            value: '',
+            value: 0,
             label: true,
             labelText: 'Общий стипендиальный фонд',
             config: {
@@ -264,6 +264,38 @@ class GrantDetailsSection extends Component {
       });
 
     this.updateDetails(newState);
+    console.log('onDublicate');
+    console.log(this.state.grantDetails);
+  };
+
+  onClose = (dataId, itemId) => {
+    let newState = this.state;
+
+    let modifiableArray = this.state.grantDetails.value.filter(
+      data => data.programCategoryId.value === dataId,
+    );
+
+    let unmodifiableArray = this.state.grantDetails.value.filter(
+      data => data.programCategoryId.value !== dataId,
+    );
+
+    let modifiedArray = modifiableArray.splice(itemId, 1);
+
+    console.log(modifiedArray);
+    newState.grantDetails.value = [...unmodifiableArray, ...modifiableArray];
+    console.log(newState);
+    // .map((item, i) => {
+    //   if (i === itemId) {
+    //     const newItem = _.cloneDeep(data);
+
+    //     return newState.grantDetails.value.splice(itemId, 1);
+    //   }
+    //   return null;
+    // });
+
+    this.updateDetails(newState);
+    console.log('kkk');
+    console.log(this.state);
   };
 
   render() {
@@ -318,6 +350,9 @@ class GrantDetailsSection extends Component {
                                 this.updateGrantsForm(newState, dataId)
                               }
                               onDublicate={dataId => this.onDublicate(dataId)}
+                              onClose={(dataId, itemId) =>
+                                this.onClose(dataId, itemId)
+                              }
                             />
                           </Card>
                         </Col>

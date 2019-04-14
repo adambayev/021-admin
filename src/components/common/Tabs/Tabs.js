@@ -18,8 +18,16 @@ export default class Example extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: 0,
+      activeTab: '20',
     };
+  }
+
+  componentDidMount() {
+    let activeTab = '10';
+    if (this.props.item) {
+      activeTab = this.props.item.id + '0';
+    }
+    this.setState({ activeTab });
   }
 
   toggle(tab) {
@@ -29,31 +37,56 @@ export default class Example extends React.Component {
       });
     }
   }
+
+  onTabClose(dataId, i) {
+    debugger;
+    let activeTab;
+    if (this.props.item) {
+      activeTab = dataId + '0';
+    }
+    this.setState({ activeTab });
+    this.props.onClose(dataId, i);
+  }
+
   render() {
     return (
       <div>
         <CardHeader>{this.props.item.name}</CardHeader>
         <Nav tabs>
-          {this.props.formData.value.map((item, i) => {
-            if (item.programCategoryId.value === this.props.item.id) {
+          {this.props.formData.value
+            .filter(f => f.programCategoryId.value === this.props.item.id)
+            .map((item, i) => {
+              // if (item.programCategoryId.value === this.props.item.id) {
               return (
                 <NavItem key={i}>
                   <NavLink
                     style={{ color: '#495057' }}
                     className={classnames({
-                      active: this.state.activeTab === i,
+                      active:
+                        this.state.activeTab === this.props.item.id + '' + i,
                     })}
                     onClick={() => {
-                      this.toggle(i);
+                      this.toggle(this.props.item.id + '' + i);
                     }}
                   >
-                    {`Стипендия #${i + 1}`}
+                    {`Стипендия #${i + 1}`}{' '}
+                    {i > 0 && (
+                      <button
+                        onClick={() => {
+                          this.onTabClose(this.props.dataId, i);
+                        }}
+                        className="close"
+                        type="button"
+                      >
+                        ×
+                      </button>
+                    )}
                   </NavLink>
                 </NavItem>
               );
-            }
-            return null;
-          })}
+              // }
+              // return null;
+            })}
           <NavItem>
             <NavLink
               style={{ color: '#495057' }}
@@ -69,13 +102,22 @@ export default class Example extends React.Component {
         </Nav>
 
         <TabContent activeTab={this.state.activeTab}>
-          {this.props.formData.value.map((item, i) => {
-            if (item.programCategoryId.value === this.props.item.id) {
+          {this.props.formData.value
+            .filter(f => f.programCategoryId.value === this.props.item.id)
+            .map((item, i) => {
+              console.log('this.props.item.id');
+              console.log(this.props.item.id);
+              console.log('item');
+              console.log(item);
+              console.log('i');
+              console.log(i);
+              console.log('this.state.activeTab');
+              console.log(this.state.activeTab);
               return (
-                <TabPane key={i} tabId={i}>
+                <TabPane key={i} tabId={this.props.item.id + '' + i}>
                   <CardBody>
                     <AdditionalForm
-                      formData={this.props.formData.value[i]}
+                      formData={item}
                       elementId={i}
                       dataId={this.props.dataId}
                       change={(newState, dataId) =>
@@ -85,9 +127,7 @@ export default class Example extends React.Component {
                   </CardBody>
                 </TabPane>
               );
-            }
-            return null;
-          })}
+            })}
         </TabContent>
       </div>
     );
