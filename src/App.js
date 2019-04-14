@@ -23,7 +23,10 @@ import { setCurrentUser } from './actions/authActions';
 import Register from './_components/auth/Register';
 import Login from './_components/auth/Login';
 
-import GrantsPage from './_components/pages/GrantsAndScholarship/GrantsPage';
+import {
+  GrantsPage,
+  CreateGrant,
+} from './_components/pages/GrantsAndScholarship/GrantsPage';
 import {
   OrganizationsPage,
   CreateOrganization,
@@ -87,7 +90,7 @@ class App extends React.Component {
               exact
               path="/grants/add"
               layout={MainLayout}
-              component={AddGrant}
+              component={CreateGrant}
             />
             <LayoutRoute
               exact

@@ -13,7 +13,6 @@ import {
 } from 'reactstrap';
 
 const EditOrganization = props => {
-  console.log(props);
   return (
     <Row>
       <Col xl={12} lg={12} md={12}>

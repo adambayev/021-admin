@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchGrants } from '../../../../actions/programActions';
 
 import Page from '../../../common/Page';
 import AddButton from '../../../common/AddButton';
 import ShowList from '../../../common/ShowList';
-import { connect } from 'react-redux';
-import { fetchGrants } from '../../../../actions/grantActions';
+import Spinner from '../../../common/Spinner';
 
 import { Row, Col, Card } from 'reactstrap';
 
@@ -29,20 +30,28 @@ class GrantsPage extends Component {
   }
 
   render() {
+    let grantContent;
+
+    if (this.props.loading) {
+      grantContent = <Spinner />;
+    } else {
+      grantContent = (
+        <Card body>
+          <AddButton buttonName="Добавить грант" prefix="grants" />
+          <ShowList
+            list={this.state.grantsList}
+            tableHeaders={this.state.tableHeaders}
+            tableBody={this.state.tableBody}
+            prefix="grants"
+          />
+        </Card>
+      );
+    }
+
     return (
       <Page title="Forms" breadcrumbs={[{ name: 'Grants', active: true }]}>
         <Row>
-          <Col>
-            <Card body>
-              <AddButton buttonName="Добавить грант" prefix="grants" />
-              <ShowList
-                list={this.state.grantsList}
-                tableHeaders={this.state.tableHeaders}
-                tableBody={this.state.tableBody}
-                prefix="grants"
-              />
-            </Card>
-          </Col>
+          <Col>{grantContent}</Col>
         </Row>
       </Page>
     );
@@ -50,7 +59,8 @@ class GrantsPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  grants: state.grant.grants,
+  grants: state.program.grantsList.results,
+  loading: state.program.loading,
 });
 
 export default connect(

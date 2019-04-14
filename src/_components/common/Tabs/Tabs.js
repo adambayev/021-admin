@@ -9,7 +9,7 @@ import {
   CardBody,
 } from 'reactstrap';
 import classnames from 'classnames';
-import AdditionalForm from '../../components/Widget/AdditionalForm';
+import AdditionalForm from '../AdditionalForm';
 import './Tabs.css';
 
 export default class Example extends React.Component {
@@ -35,6 +35,7 @@ export default class Example extends React.Component {
         <CardHeader>{this.props.item.name}</CardHeader>
         <Nav tabs>
           {this.props.formData.value.map((item, i) => {
+            console.log(this.props);
             if (item.programCategoryId.value === this.props.item.id) {
               return (
                 <NavItem key={i}>

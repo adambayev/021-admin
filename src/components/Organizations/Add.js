@@ -13,7 +13,6 @@ import {
 } from 'reactstrap';
 
 const AddOrganization = props => {
-  console.log(props.data.grantFormData);
   return (
     <Row>
       <Col xl={12} lg={12} md={12}>

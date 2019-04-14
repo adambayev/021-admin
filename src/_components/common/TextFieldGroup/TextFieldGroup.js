@@ -13,14 +13,16 @@ const TextFieldGroup = ({
   type,
   onChange,
   disabled,
+  labelSm,
+  inputSm,
 }) => {
   return (
     <div>
       <FormGroup row className="py-0 my-0">
-        <Label for={name} sm={5}>
+        <Label for={name} sm={labelSm}>
           {label}
         </Label>
-        <Col sm={7}>
+        <Col sm={inputSm}>
           <Input
             type={type}
             placeholder={placeholder}
@@ -50,6 +52,8 @@ TextFieldGroup.propTypes = {
 
 TextFieldGroup.defaultProps = {
   type: 'text',
+  labelSm: 4,
+  inputSm: 8,
 };
 
 export default TextFieldGroup;

@@ -1,4 +1,5 @@
 import React from 'react';
+import * as _ from 'lodash';
 import {
   Col,
   FormGroup,
@@ -8,7 +9,7 @@ import {
   Form,
   CustomInput,
 } from 'reactstrap';
-import InputWithDropdown from '../InputWithDropdown';
+import InputWithDropdown from '../../common/InputWithDropdown';
 
 const AdditionalForm = props => {
   const renderFields = () => {
@@ -65,12 +66,21 @@ const AdditionalForm = props => {
     newState[id].value = event.target.value;
 
     props.change(newState, props.dataId);
+
     calculateGrantSum();
     calculateTotalFund();
+    updateCurrency();
+    updateGrantPercent();
   };
 
   const calculateGrantSum = () => {
     let newState = props.formData;
+
+    let duration = _.cloneDeep(newState['duration'].value);
+
+    if (duration.currency === 'месяцы') {
+      duration.amount = duration.amount / 12;
+    }
 
     if (
       newState['duration'].value.amount !== 0 &&
@@ -86,11 +96,10 @@ const AdditionalForm = props => {
 
       if (newState['grantPercent'].value.isPercentage) {
         newState['grantSum'].value =
-          +newState['duration'].value.amount *
-          (percentGrant + calculatedScholarship);
+          +duration.amount * (percentGrant + calculatedScholarship);
       } else {
         newState['grantSum'].value =
-          +newState['duration'].value.amount *
+          +duration.amount *
           (calculatedScholarship + +newState['grantPercent'].value.amount);
       }
     } else {
@@ -120,12 +129,39 @@ const AdditionalForm = props => {
     props.change(newState, props.dataId);
   };
 
+  const updateCurrency = () => {
+    let newState = props.formData;
+    const totalCostCurrency = newState['totalCost'].value.currency;
+    newState['scholarship'].value.currency = totalCostCurrency;
+    if (!newState['grantPercent'].value.isPercentage) {
+      newState['grantPercent'].value.currency = totalCostCurrency;
+    }
+    props.change(newState, props.dataId);
+  };
+
+  const updateGrantPercent = () => {
+    let newState = props.formData;
+    if (+newState['grantType'].value === 0) {
+      newState['grantPercent'].config.disabled = true;
+      if (newState['grantPercent'].value.isPercentage) {
+        newState['grantPercent'].value.amount = 100;
+      } else {
+        newState['grantPercent'].value.amount =
+          newState['totalCost'].value.amount;
+      }
+    } else {
+      newState['grantPercent'].config.disabled = false;
+    }
+  };
+
   const dropdownHandler = (value, id) => {
     let newState = props.formData;
     newState[id].value.currency = value;
     props.change(newState, props.dataId);
     calculateGrantSum();
     calculateTotalFund();
+    updateCurrency();
+    updateGrantPercent();
   };
 
   const dropdownInput = (event, id) => {
@@ -134,6 +170,8 @@ const AdditionalForm = props => {
     props.change(newState, props.dataId);
     calculateGrantSum();
     calculateTotalFund();
+    updateCurrency();
+    updateGrantPercent();
   };
 
   const inputRadioHandler = (event, id) => {
@@ -142,6 +180,8 @@ const AdditionalForm = props => {
     props.change(newState, props.dataId);
     calculateGrantSum();
     calculateTotalFund();
+    updateCurrency();
+    updateGrantPercent();
   };
 
   const switchHandler = (event, id) => {
@@ -151,6 +191,7 @@ const AdditionalForm = props => {
   };
 
   const radioChangeHandler = (event, id, choice) => {
+    console.log(event.target.value);
     let newState = props.formData;
     newState[id].value.isPercentage = choice;
     props.change(newState, props.dataId);
@@ -207,6 +248,7 @@ const AdditionalForm = props => {
                 options={values.config.options}
                 clickedItem={value => dropdownHandler(value, data.id)}
                 changedValue={value => dropdownInput(value, data.id)}
+                dropdownDisabled={values.config.dropdownDisabled}
               />
             </Col>
           </FormGroup>
@@ -251,6 +293,8 @@ const AdditionalForm = props => {
                 options={values.value.isPercentage ? ['%'] : ['KZT']}
                 changedValue={value => inputRadioHandler(value, data.id)}
                 clickedItem={value => dropdownHandler(value, data.id)}
+                dropdownDisabled={values.config.dropdownDisabled}
+                disabled={values.config.disabled}
               />
             </Col>
           </FormGroup>

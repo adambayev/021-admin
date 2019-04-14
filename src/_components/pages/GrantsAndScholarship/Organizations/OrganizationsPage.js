@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchOrganizations } from '../../../../actions/grantActions';
+import { fetchOrganizations } from '../../../../actions/programActions';
 
 import Page from '../../../common/Page';
 import AddButton from '../../../common/AddButton';
@@ -59,8 +59,8 @@ class OrganizationsPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  organizations: state.grant.organizations,
-  loading: state.grant.loading,
+  organizations: state.program.organizations,
+  loading: state.program.loading,
 });
 
 export default connect(

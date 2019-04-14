@@ -1,3 +1,4 @@
 import GrantsPage from './GrantsPage';
+import CreateGrant from './CreateGrant';
 
-export default GrantsPage;
+export { GrantsPage, CreateGrant };

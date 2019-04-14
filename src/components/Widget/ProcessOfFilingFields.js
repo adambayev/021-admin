@@ -32,7 +32,6 @@ const FormFields = props => {
 
   const changeFileHandler = (event, id) => {
     let newState = props.data;
-    console.log(newState);
     //newState.processFile = event.target.files[0];
     newState[id].value.push(event.target.value);
     props.change(newState);

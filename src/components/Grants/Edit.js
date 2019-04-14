@@ -45,7 +45,6 @@ const EditGrant = props => {
     });
 
     props.updateDetails(newState);
-    console.log(newState.grantDetails.value);
   };
 
   return (

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createOrganization } from '../../../../actions/grantActions';
+import { createOrganization } from '../../../../actions/programActions';
+import TextFieldGroup from '../../../common/TextFieldGroup';
 
 import {
   Button,
@@ -11,8 +12,6 @@ import {
   Col,
   Form,
   FormGroup,
-  Label,
-  Input,
 } from 'reactstrap';
 
 class CreateOrganization extends Component {
@@ -26,7 +25,7 @@ class CreateOrganization extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.grant.success) {
+    if (nextProps.program && nextProps.program.success) {
       this.setState({ success: true });
     }
 
@@ -46,8 +45,6 @@ class CreateOrganization extends Component {
       name: this.state.name,
     };
 
-    console.log('Вот так вот');
-
     this.props.createOrganization(data);
   };
 
@@ -58,19 +55,14 @@ class CreateOrganization extends Component {
           <CardHeader>Добавить организацию</CardHeader>
           <CardBody>
             <Form onSubmit={this.handleSubmit}>
-              <FormGroup row>
-                <Label for="name" sm={3}>
-                  Название организации
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    name="name"
-                    type="text"
-                    value={this.state.value}
-                    onChange={this.onChange}
-                  />
-                </Col>
-              </FormGroup>
+              <TextFieldGroup
+                label="Название организации"
+                name="name"
+                value={this.state.value}
+                onChange={this.onChange}
+                labelSm={5}
+                inputSm={7}
+              />
               <FormGroup check row>
                 <Col>
                   <Button className="float-right" type="submit">

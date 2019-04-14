@@ -44,8 +44,6 @@ class Login extends React.Component {
       password: this.state.password,
     };
 
-    console.log(userData);
-
     this.props.loginUser(userData);
   };
 

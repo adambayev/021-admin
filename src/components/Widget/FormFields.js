@@ -67,24 +67,17 @@ const FormFields = props => {
     let options = _.cloneDeep(optionsList);
     newState.formData[id].value = _.cloneDeep(options);
     props.change(newState);
-    console.log('this.state.multiSelect');
-    console.log(newState.formData.subjects.value);
-    console.log('this.state.multiSelect');
   };
   const selectedBadgeClicked = (optionsList, id) => {
     let newState = props.data;
     let options = _.cloneDeep(optionsList);
     newState.formData[id].value = _.cloneDeep(options);
     props.change(newState);
-    console.log('this.state.multiSelect1');
-    console.log(newState.formData.subjects.value);
-    console.log('this.state.multiSelect1');
   };
 
   const renderTemplates = data => {
     let formTemplate = '';
     let values = data.settings;
-    console.log(props.data.formData.programCategories);
 
     switch (values.element) {
       case 'input':

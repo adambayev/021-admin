@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const DataTable = props => {
-  console.log('props.programCategories');
-  console.log(props.programCategories);
   // let filteredOrganizations = props.organizations.filter(
   //   a => (a.id = item.organizationId),
   // );
