@@ -8,6 +8,7 @@ import {
   FormText,
   Row,
   CustomInput,
+  Button,
 } from 'reactstrap';
 import TextEditor from '../../common/TextEditor';
 import Selector from '../../common/Selector';
@@ -101,6 +102,12 @@ const FormFields = props => {
   const changeFileHandler = event => {
     const file = event.target.files[0];
     props.addFile(file);
+  };
+
+  const changeAttachmentsHandler = (event, id, itemId) => {
+    const attachment = event.target.files[0];
+    const fileName = event.target.value;
+    props.addAttachment(attachment, fileName, id, itemId);
   };
 
   const switchHandler = (event, id) => {
@@ -250,23 +257,43 @@ const FormFields = props => {
           </FormGroup>
         );
         break;
-      case 'multipleFile':
-        formTemplate = (
-          <FormGroup row className="py-0 my-0">
-            {showLabel(values.label, values.labelText)}
-            <Col sm={9}>
-              <CustomInput
-                type="file"
-                id="exampleCustomFileBrowser"
-                name="customFile"
-                label={values.value[0]}
-                {...values.config}
-                // value=""
-                // onChange={event => changeFileHandler(event, data.id)}
-              />
-            </Col>
-          </FormGroup>
-        );
+      case 'multipleFiles':
+        formTemplate = values.config.attachments.map((item, i) => {
+          const lastIndex = values.config.attachments.length - 1;
+          console.log('lastIndex');
+          console.log(lastIndex);
+          return (
+            <FormGroup key={i} row className="py-0 my-0">
+              {showLabel(values.label, values.labelText + (i + 1))}
+              <Col sm={9}>
+                <Row>
+                  <Col sm={i === lastIndex && i > 0 ? 11 : 12}>
+                    <CustomInput
+                      type="file"
+                      id="exampleCustomFileBrowser"
+                      name="customFile"
+                      label={item.value}
+                      value={item.value}
+                      onChange={event =>
+                        changeAttachmentsHandler(event, data.id, i)
+                      }
+                    />
+                  </Col>
+                  {i === lastIndex && i > 0 && (
+                    <Col sm={1}>
+                      <Button
+                        color="danger"
+                        onClick={() => props.removeAttachment(i)}
+                      >
+                        ×
+                      </Button>
+                    </Col>
+                  )}
+                </Row>
+              </Col>
+            </FormGroup>
+          );
+        });
         break;
       case 'switch':
         formTemplate = (

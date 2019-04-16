@@ -5,6 +5,8 @@ import {
   FETCH_PAGED_GRANTS_REQUEST,
   ADD_GRANT_VALUE,
   ADD_FILE,
+  ADD_ATTACHMENTS,
+  REMOVE_ATTACHMENTS,
   FETCH_GRANTGIVERS_REQUEST,
   FETCH_SUBJECTS_REQUEST,
   FETCH_LOCATIONS_REQUEST,
@@ -16,6 +18,7 @@ const initialState = {
   organizations: [],
   grants: [],
   file: {},
+  attachments: [],
   grantsList: [],
   pagedGrantsList: [],
   grantGivers: [],
@@ -60,6 +63,19 @@ export default function(state = initialState, action) {
       return {
         ...state,
         file: action.payload,
+      };
+    case ADD_ATTACHMENTS:
+      return {
+        ...state,
+        attachments: [...state.attachments, action.payload],
+      };
+    case REMOVE_ATTACHMENTS:
+      return {
+        ...state,
+        attachments: [
+          ...state.attachments.slice(0, action.payload),
+          ...state.attachments.slice(action.payload + 1),
+        ],
       };
     case FETCH_GRANTGIVERS_REQUEST:
       return {

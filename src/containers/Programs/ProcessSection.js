@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addGrantValue } from '../../actions/programActions';
+import {
+  addGrantValue,
+  addAttachments,
+  removeAttachments,
+} from '../../actions/programActions';
 import FormFields from '../../components/common/FormFields';
 
 import { Card, CardBody, CardHeader, Col, Collapse, Form } from 'reactstrap';
@@ -25,15 +29,15 @@ class ProcessSection extends Component {
         },
         file: {
           position: 'right',
-          element: 'multipleFile',
+          element: 'multipleFiles',
           value: '',
           label: true,
-          labelText: 'Приложение',
+          labelText: 'Приложение #',
           text: 'Процесс подачи стипендии',
           config: {
             name: 'file_input',
             type: 'file',
-            options: [],
+            attachments: [{ 0: { value: '' } }],
           },
         },
       },
@@ -41,8 +45,43 @@ class ProcessSection extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const newState = this.state.formData;
+    if (nextProps.grants) {
+      for (let key in nextProps.grants) {
+        if (newState[key]) {
+          newState[key].value = nextProps.grants[key];
+        }
+      }
+    }
+  }
+
   changeHandler = (value, id) => {
     this.props.addGrantValue({ id, value });
+  };
+
+  addAttachment = (value, fileName, id, itemId) => {
+    const newState = this.state.formData;
+
+    newState.file.config.attachments[itemId].value = fileName;
+    itemId < 4 && newState.file.config.attachments.push({ value: '' });
+
+    this.setState({ formData: newState });
+    this.props.addAttachments(value);
+  };
+
+  removeAttachment = itemId => {
+    console.log(itemId);
+    const newState = this.state.formData;
+    let updatedFiles = newState.file.config.attachments;
+
+    updatedFiles.splice(itemId, 1);
+
+    newState.file.config.attachments = updatedFiles;
+
+    this.setState({ formData: newState });
+    this.props.removeAttachments(itemId);
+    console.log(this.state);
   };
 
   handleClick = name => {
@@ -79,6 +118,10 @@ class ProcessSection extends Component {
                   labelSm={3}
                   inputSm={9}
                   change={(value, id) => this.changeHandler(value, id)}
+                  addAttachment={(value, fileName, id, itemId) =>
+                    this.addAttachment(value, fileName, id, itemId)
+                  }
+                  removeAttachment={itemId => this.removeAttachment(itemId)}
                   data={this.state.formData}
                 />
               </Form>
@@ -90,7 +133,11 @@ class ProcessSection extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  grants: state.program.grants,
+});
+
 export default connect(
-  null,
-  { addGrantValue },
+  mapStateToProps,
+  { addGrantValue, addAttachments, removeAttachments },
 )(ProcessSection);

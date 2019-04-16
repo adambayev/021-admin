@@ -9,6 +9,8 @@ import {
   CREATE_GRANT_FAILURE,
   ADD_GRANT_VALUE,
   ADD_FILE,
+  ADD_ATTACHMENTS,
+  REMOVE_ATTACHMENTS,
   FETCH_GRANTGIVERS_REQUEST,
   FETCH_SUBJECTS_REQUEST,
   FETCH_LOCATIONS_REQUEST,
@@ -64,8 +66,8 @@ export const fetchPagedGrants = (page, size) => dispatch => {
   });
 };
 
-export const createGrant = (file, data) => dispatch => {
-  fileUpload(file, data).then(response => {
+export const createGrant = (file, attachments, data) => dispatch => {
+  fileUpload(file, attachments, data).then(response => {
     response.data.ok
       ? dispatch({
           type: CREATE_GRANT_SUCCESS,
@@ -78,10 +80,13 @@ export const createGrant = (file, data) => dispatch => {
   });
 };
 
-const fileUpload = (file, data) => {
+const fileUpload = (file, attachments, data) => {
   const url = `${URL}/Grants/file`;
   const formData = new FormData();
   formData.append('file', file);
+  for (let i = 0; i < attachments.length; i++) {
+    formData.append('attachments', attachments[i]);
+  }
   formData.append('grant', JSON.stringify(data));
   const config = {
     headers: {
@@ -102,6 +107,20 @@ export const addFile = data => dispatch => {
   dispatch({
     type: ADD_FILE,
     payload: data,
+  });
+};
+
+export const addAttachments = data => dispatch => {
+  dispatch({
+    type: ADD_ATTACHMENTS,
+    payload: data,
+  });
+};
+
+export const removeAttachments = id => dispatch => {
+  dispatch({
+    type: REMOVE_ATTACHMENTS,
+    payload: id,
   });
 };
 

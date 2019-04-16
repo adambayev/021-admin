@@ -34,7 +34,9 @@ class CreateGrant extends Component {
 
     const grantData = this.props.grants;
     const file = this.props.file;
-    this.props.createGrant(file, grantData);
+    const attachments = this.props.attachments;
+    console.log(attachments);
+    this.props.createGrant(file, attachments, grantData);
   };
 
   render() {
@@ -68,6 +70,7 @@ CreateGrant.propTypes = {
 const mapStateToProps = state => ({
   grants: state.program.grants,
   file: state.program.file,
+  attachments: state.program.attachments,
 });
 
 export default connect(

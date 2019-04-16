@@ -309,7 +309,7 @@ const AdditionalForm = props => {
                   type="switch"
                   id={`${values.config.name}-${props.elementId}`}
                   checked={values.value}
-                  label="Перелет покрывается"
+                  label={values.config.switchLabel}
                   onChange={event =>
                     switchHandler(event, data.id, data.grantId)
                   }

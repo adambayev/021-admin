@@ -94,8 +94,7 @@ class GrantDetailsSection extends Component {
             labelText: 'Сумма на перелеты',
             config: {
               name: 'flights_input',
-              type: 'number',
-              placeholder: '',
+              switchLabel: 'Перелет покрывается',
             },
           },
           duration: {
@@ -112,16 +111,15 @@ class GrantDetailsSection extends Component {
               options: ['месяцы', 'годы'],
             },
           },
-          amount: {
+          accomodation: {
             position: 'left',
-            element: 'input',
-            value: 0,
+            element: 'switch',
+            value: false,
             label: true,
-            labelText: 'Количество грантов',
+            labelText: 'Сумма на проживание',
             config: {
-              name: 'amount_input',
-              type: 'number',
-              placeholder: '',
+              name: 'accomodation_input',
+              switchLabel: 'Проживание покрывается',
             },
           },
           grantSum: {
@@ -137,8 +135,17 @@ class GrantDetailsSection extends Component {
               placeholder: '',
             },
           },
-          empty: {
+          amount: {
             position: 'left',
+            element: 'input',
+            value: 0,
+            label: true,
+            labelText: 'Количество грантов',
+            config: {
+              name: 'amount_input',
+              type: 'number',
+              placeholder: '',
+            },
           },
           totalFund: {
             position: 'right',
@@ -284,14 +291,6 @@ class GrantDetailsSection extends Component {
     console.log(modifiedArray);
     newState.grantDetails.value = [...unmodifiableArray, ...modifiableArray];
     console.log(newState);
-    // .map((item, i) => {
-    //   if (i === itemId) {
-    //     const newItem = _.cloneDeep(data);
-
-    //     return newState.grantDetails.value.splice(itemId, 1);
-    //   }
-    //   return null;
-    // });
 
     this.updateDetails(newState);
     console.log('kkk');
