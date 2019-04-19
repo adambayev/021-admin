@@ -160,6 +160,72 @@ class GrantDetailsSection extends Component {
               placeholder: '',
             },
           },
+          startDate: {
+            position: 'left',
+            element: 'input',
+            value: '',
+            label: true,
+            labelText: 'Начало программы',
+            config: {
+              name: 'startDate_input',
+              type: 'date',
+              placeholder: 'Выберит дату',
+            },
+          },
+          isDeadline: {
+            position: 'right',
+            element: 'switch',
+            value: true,
+            label: true,
+            labelText: 'Бессрочный',
+            config: {
+              label: 'Бессрочный',
+              name: 'deadline_input',
+              type: 'number',
+              placeholder: '',
+            },
+          },
+          endDate: {
+            position: 'left',
+            element: 'input',
+            value: '',
+            label: true,
+            labelText: 'Конец программы',
+            config: {
+              name: 'endDate_input',
+              type: 'date',
+              placeholder: 'Выберит дату',
+            },
+          },
+          deadlineStarts: {
+            position: 'right',
+            element: 'input',
+            value: '',
+            label: true,
+            labelText: 'Начало приема заявок',
+            config: {
+              disabled: true,
+              name: 'startDate_input',
+              type: 'date',
+              placeholder: 'Выберит дату',
+            },
+          },
+          empty: {
+            position: 'left',
+          },
+          deadlineEnds: {
+            position: 'right',
+            element: 'input',
+            value: '',
+            label: true,
+            labelText: 'Конец приема заявок',
+            config: {
+              disabled: true,
+              name: 'endDate_input',
+              type: 'date',
+              placeholder: 'Выберит дату',
+            },
+          },
           programCategoryId: {
             value: 0,
           },
@@ -169,7 +235,7 @@ class GrantDetailsSection extends Component {
         value: [],
         options: [],
       },
-      isOpenDetails: false,
+      isOpenDetails: true,
     };
   }
 
@@ -271,8 +337,6 @@ class GrantDetailsSection extends Component {
       });
 
     this.updateDetails(newState);
-    console.log('onDublicate');
-    console.log(this.state.grantDetails);
   };
 
   onClose = (dataId, itemId) => {
@@ -286,15 +350,11 @@ class GrantDetailsSection extends Component {
       data => data.programCategoryId.value !== dataId,
     );
 
-    let modifiedArray = modifiableArray.splice(itemId, 1);
+    modifiableArray.splice(itemId, 1);
 
-    console.log(modifiedArray);
     newState.grantDetails.value = [...unmodifiableArray, ...modifiableArray];
-    console.log(newState);
 
     this.updateDetails(newState);
-    console.log('kkk');
-    console.log(this.state);
   };
 
   render() {

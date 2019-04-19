@@ -5,7 +5,7 @@ import { URL } from '../config';
 
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post(`${URL}/Users/register`, userData)
+    .post(`${URL}/auth/register`, userData)
     .then(response => {
       response.ok
         ? history.push('/login')
@@ -24,7 +24,7 @@ export const registerUser = (userData, history) => dispatch => {
 
 export const loginUser = userData => dispatch => {
   axios
-    .post(`${URL}/users/login`, userData)
+    .post(`${URL}/auth/login`, userData)
     .then(res => {
       const token = res.data.data.tokens.accessToken;
       localStorage.setItem('jwtToken', token);

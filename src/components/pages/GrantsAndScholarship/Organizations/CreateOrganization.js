@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createOrganization } from '../../../../actions/programActions';
-import TextFieldGroup from '../../../common/TextFieldGroup';
+import FormFields from '../../../common/FormFields/FormFields';
+import {
+  addOrganizationValue,
+  addLogoFile,
+} from '../../../../actions/programActions';
 
 import {
   Button,
@@ -18,9 +22,32 @@ class CreateOrganization extends Component {
   constructor() {
     super();
     this.state = {
-      name: '',
       success: false,
       errors: {},
+      formData: {
+        logo: {
+          position: 'right',
+          element: 'file',
+          value: '',
+          label: true,
+          labelText: 'Лого',
+          text: 'Лого организаций',
+          config: {
+            name: 'logo_input',
+            type: 'file',
+          },
+        },
+        name: {
+          label: true,
+          labelText: 'Название организаций',
+          position: 'left',
+          element: 'input',
+          value: '',
+          config: {
+            type: 'text',
+          },
+        },
+      },
     };
   }
 
@@ -32,7 +59,33 @@ class CreateOrganization extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+
+    const newState = this.state.formData;
+    console.log(nextProps.organization);
+    if (nextProps.organization) {
+      for (let key in nextProps.organization) {
+        if (newState[key]) {
+          newState[key].value = nextProps.organization[key];
+        }
+      }
+    }
+
+    this.setState({
+      formData: newState,
+    });
   }
+
+  addLogoFile = value => {
+    this.props.addLogoFile(value);
+  };
+
+  changeHandler = (value, id) => {
+    this.props.addOrganizationValue({ id, value });
+  };
+
+  changeState = formData => {
+    this.setState({ formData });
+  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -41,11 +94,12 @@ class CreateOrganization extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const data = {
-      name: this.state.name,
+    const { organization, logoFile } = this.props;
+    const modelData = {
+      name: organization.name,
     };
 
-    this.props.createOrganization(data);
+    this.props.createOrganization(logoFile, modelData);
   };
 
   render() {
@@ -55,13 +109,12 @@ class CreateOrganization extends Component {
           <CardHeader>Добавить организацию</CardHeader>
           <CardBody>
             <Form onSubmit={this.handleSubmit}>
-              <TextFieldGroup
-                label="Название организации"
-                name="name"
-                value={this.state.value}
-                onChange={this.onChange}
-                labelSm={5}
-                inputSm={7}
+              <FormFields
+                columns={2}
+                data={this.state.formData}
+                change={(value, id) => this.changeHandler(value, id)}
+                addFile={value => this.addLogoFile(value)}
+                changeState={newState => this.changeState(newState)}
               />
               <FormGroup check row>
                 <Col>
@@ -82,11 +135,12 @@ CreateOrganization.propTypes = {
   errors: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = state => ({
-  errors: state.errors,
+const mapStateToProps = state => ({
+  organization: state.program.organization,
+  logoFile: state.program.logoFile,
 });
 
 export default connect(
-  mapDispatchToProps,
-  { createOrganization },
+  mapStateToProps,
+  { createOrganization, addOrganizationValue, addLogoFile },
 )(CreateOrganization);

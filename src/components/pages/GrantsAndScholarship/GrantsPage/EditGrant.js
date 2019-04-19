@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createGrant } from '../../../../actions/programActions';
+import { fetchSingleGrant } from '../../../../actions/programActions';
 import PropTypes from 'prop-types';
 import Page from '../../../common/Page';
 import {
@@ -8,12 +8,12 @@ import {
   DescriptionSection,
   RequirementSection,
   ProcessSection,
-  GrantDetailsSection,
+  // GrantDetailsSection,
 } from '../../../../containers/Programs';
 
 import { Card, CardBody, Col, Row, Button } from 'reactstrap';
 
-class CreateGrant extends Component {
+class EditGrant extends Component {
   constructor() {
     super();
     this.state = {
@@ -21,6 +21,11 @@ class CreateGrant extends Component {
       success: false,
       errors: {},
     };
+  }
+
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    this.props.fetchSingleGrant(id);
   }
 
   componentWillReceiveProps(nextProps) {}
@@ -47,7 +52,7 @@ class CreateGrant extends Component {
           <DescriptionSection />
           <RequirementSection />
           <ProcessSection />
-          <GrantDetailsSection />
+          {/* <GrantDetailsSection /> */}
           <Col xl={12} lg={12} md={12}>
             <Card>
               <CardBody>
@@ -63,7 +68,7 @@ class CreateGrant extends Component {
   }
 }
 
-CreateGrant.propTypes = {
+EditGrant.propTypes = {
   errors: PropTypes.object,
 };
 
@@ -75,5 +80,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createGrant },
-)(CreateGrant);
+  { fetchSingleGrant },
+)(EditGrant);

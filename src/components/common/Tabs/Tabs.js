@@ -105,14 +105,6 @@ export default class Example extends React.Component {
           {this.props.formData.value
             .filter(f => f.programCategoryId.value === this.props.item.id)
             .map((item, i) => {
-              console.log('this.props.item.id');
-              console.log(this.props.item.id);
-              console.log('item');
-              console.log(item);
-              console.log('i');
-              console.log(i);
-              console.log('this.state.activeTab');
-              console.log(this.state.activeTab);
               return (
                 <TabPane key={i} tabId={this.props.item.id + '' + i}>
                   <CardBody>

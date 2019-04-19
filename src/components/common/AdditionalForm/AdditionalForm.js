@@ -187,6 +187,15 @@ const AdditionalForm = props => {
   const switchHandler = (event, id) => {
     let newState = props.formData;
     newState[id].value = event.target.checked;
+    if (id === 'isDeadline') {
+      if (event.target.checked) {
+        newState.deadlineStarts.config.disabled = true;
+        newState.deadlineEnds.config.disabled = true;
+      } else {
+        newState.deadlineStarts.config.disabled = false;
+        newState.deadlineEnds.config.disabled = false;
+      }
+    }
     props.change(newState, props.dataId);
   };
 

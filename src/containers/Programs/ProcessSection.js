@@ -71,7 +71,6 @@ class ProcessSection extends Component {
   };
 
   removeAttachment = itemId => {
-    console.log(itemId);
     const newState = this.state.formData;
     let updatedFiles = newState.file.config.attachments;
 
@@ -81,7 +80,6 @@ class ProcessSection extends Component {
 
     this.setState({ formData: newState });
     this.props.removeAttachments(itemId);
-    console.log(this.state);
   };
 
   handleClick = name => {

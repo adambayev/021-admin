@@ -5,10 +5,13 @@ import {
   CREATE_ORGANIZATION_FAILURE,
   FETCH_GRANTS_REQUEST,
   FETCH_PAGED_GRANTS_REQUEST,
+  FETCH_SINGLE_GRANT_REQUEST,
   CREATE_GRANT_SUCCESS,
   CREATE_GRANT_FAILURE,
   ADD_GRANT_VALUE,
   ADD_FILE,
+  ADD_ORGANIZATION_VALUE,
+  ADD_LOGO_FILE,
   ADD_ATTACHMENTS,
   REMOVE_ATTACHMENTS,
   FETCH_GRANTGIVERS_REQUEST,
@@ -29,21 +32,18 @@ export const fetchOrganizations = () => dispatch => {
   });
 };
 
-export const createOrganization = data => dispatch => {
-  axios
-    .post(`${URL}/organizations`, data)
-    .then(response => {
-      dispatch({
-        type: CREATE_ORGANIZATION_SUCCESS,
-        payload: response.data.ok,
-      });
-    })
-    .catch(err => {
-      dispatch({
-        type: CREATE_ORGANIZATION_FAILURE,
-        payload: err,
-      });
-    });
+export const createOrganization = (file, data) => dispatch => {
+  logoUpload(file, data).then(response => {
+    response.data.ok
+      ? dispatch({
+          type: CREATE_ORGANIZATION_SUCCESS,
+          payload: response.data.ok,
+        })
+      : dispatch({
+          type: CREATE_ORGANIZATION_FAILURE,
+          payload: response.data.ok,
+        });
+  });
 };
 
 export const fetchGrants = () => dispatch => {
@@ -66,6 +66,16 @@ export const fetchPagedGrants = (page, size) => dispatch => {
   });
 };
 
+export const fetchSingleGrant = id => dispatch => {
+  dispatch(setProgramLoading());
+  axios.get(`${URL}/grants/${id}`).then(response => {
+    dispatch({
+      type: FETCH_SINGLE_GRANT_REQUEST,
+      payload: response.data.data,
+    });
+  });
+};
+
 export const createGrant = (file, attachments, data) => dispatch => {
   fileUpload(file, attachments, data).then(response => {
     response.data.ok
@@ -80,6 +90,19 @@ export const createGrant = (file, attachments, data) => dispatch => {
   });
 };
 
+const logoUpload = (file, data) => {
+  const url = `${URL}/Organizations/file`;
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('model', JSON.stringify(data));
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  }
+  return axios.post(url, formData, config);
+}
+
 const fileUpload = (file, attachments, data) => {
   const url = `${URL}/Grants/file`;
   const formData = new FormData();
@@ -87,10 +110,11 @@ const fileUpload = (file, attachments, data) => {
   for (let i = 0; i < attachments.length; i++) {
     formData.append('attachments', attachments[i]);
   }
-  formData.append('grant', JSON.stringify(data));
+  formData.append('model', JSON.stringify(data));
   const config = {
     headers: {
       'content-type': 'multipart/form-data',
+      Authorization: 'Bearer ' + localStorage.jwtToken,
     },
   };
   return axios.post(url, formData, config);
@@ -106,6 +130,20 @@ export const addGrantValue = data => dispatch => {
 export const addFile = data => dispatch => {
   dispatch({
     type: ADD_FILE,
+    payload: data,
+  });
+};
+
+export const addOrganizationValue = data => dispatch => {
+  dispatch({
+    type: ADD_ORGANIZATION_VALUE,
+    payload: data,
+  });
+};
+
+export const addLogoFile = data => dispatch => {
+  dispatch({
+    type: ADD_LOGO_FILE,
     payload: data,
   });
 };

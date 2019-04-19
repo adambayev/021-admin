@@ -14,10 +14,10 @@ class GrantsPage extends Component {
   constructor() {
     super();
     this.state = {
-      tableHeaders: ['#', 'Название', 'Краткое описание'],
-      tableBody: ['id', 'name', 'shortDescription'],
+      tableHeaders: ['#', 'Название'],
+      tableBody: ['id', 'name'],
       page: 1,
-      size: 10,
+      size: 5,
       pageCount: 0,
       currentPage: 1,
       pagedGrantsList: {

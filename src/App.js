@@ -11,6 +11,7 @@ import Login from './components/auth/Login';
 import {
   GrantsPage,
   CreateGrant,
+  EditGrant,
 } from './components/pages/GrantsAndScholarship/GrantsPage';
 import {
   OrganizationsPage,
@@ -66,6 +67,12 @@ class App extends React.Component {
               path="/grants/add"
               layout={MainLayout}
               component={CreateGrant}
+            />
+            <LayoutRoute
+              exact
+              path="/grants/edit/:id"
+              layout={MainLayout}
+              component={EditGrant}
             />
             <LayoutRoute
               exact

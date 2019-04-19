@@ -260,8 +260,6 @@ const FormFields = props => {
       case 'multipleFiles':
         formTemplate = values.config.attachments.map((item, i) => {
           const lastIndex = values.config.attachments.length - 1;
-          console.log('lastIndex');
-          console.log(lastIndex);
           return (
             <FormGroup key={i} row className="py-0 my-0">
               {showLabel(values.label, values.labelText + (i + 1))}

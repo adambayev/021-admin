@@ -3,8 +3,11 @@ import {
   CREATE_ORGANIZATION_SUCCESS,
   FETCH_GRANTS_REQUEST,
   FETCH_PAGED_GRANTS_REQUEST,
+  FETCH_SINGLE_GRANT_REQUEST,
   ADD_GRANT_VALUE,
   ADD_FILE,
+  ADD_ORGANIZATION_VALUE,
+  ADD_LOGO_FILE,
   ADD_ATTACHMENTS,
   REMOVE_ATTACHMENTS,
   FETCH_GRANTGIVERS_REQUEST,
@@ -18,6 +21,7 @@ const initialState = {
   organizations: [],
   grants: [],
   file: {},
+  logoFile: {},
   attachments: [],
   grantsList: [],
   pagedGrantsList: [],
@@ -54,6 +58,12 @@ export default function(state = initialState, action) {
         pagedGrantsList: action.payload,
         loading: false,
       };
+    case FETCH_SINGLE_GRANT_REQUEST:
+      return {
+        ...state,
+        grants: action.payload,
+        loadin: false,
+      };
     case ADD_GRANT_VALUE:
       return {
         ...state,
@@ -63,6 +73,19 @@ export default function(state = initialState, action) {
       return {
         ...state,
         file: action.payload,
+      };
+    case ADD_ORGANIZATION_VALUE:
+      return {
+        ...state,
+        organization: {
+          ...state.organization,
+          [action.payload.id]: action.payload.value
+        },
+      };
+    case ADD_LOGO_FILE:
+      return {
+        ...state,
+        logoFile: action.payload,
       };
     case ADD_ATTACHMENTS:
       return {
